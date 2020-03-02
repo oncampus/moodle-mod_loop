@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/loop/db" VERSION="20200227" COMMENT="XMLDB file for Moodle mod/loop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="loop" COMMENT="This table saves information about an instance of mod_loop in a course.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="loop_system" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="page" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="personalized_access" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="1 = personalized access, 0 = shared/anonymous access"/>
+        <FIELD NAME="student_role_allocation" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="teacher_role_allocation" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="theme" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="loop_system" TYPE="foreign" FIELDS="loop_system" REFTABLE="loop_systems" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="loop_systems" COMMENT="This table saves information about loop systems allowed for this moodle.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="externalid" TYPE="char" LENGTH="32" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="url" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="personalized_access" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="1 = personalized access allowed, 0 = only shared/anonymous access allowed"/>
+        <FIELD NAME="student_role_allocation" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="student_no_edit" SEQUENCE="false"/>
+        <FIELD NAME="teacher_role_allocation" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="teacher_no_edit" SEQUENCE="false"/>
+        <FIELD NAME="allowed_themes" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
