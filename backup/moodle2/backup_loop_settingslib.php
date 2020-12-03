@@ -1,4 +1,5 @@
 <?php
+ 
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,15 +16,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
  
 /**
- * @package   plugintype_pluginname
- * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>  
+ * @package moodlecore
+ * @subpackage backup-moodle2
+ * @copyright 2010 onwards YOUR_NAME_GOES_HERE {@link YOUR_URL_GOES_HERE}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
-defined('MOODLE_INTERNAL') || die();
- 
-$plugin->version = 2020022721;
-$plugin->requires = 2018111200;
-$plugin->component = 'mod_loop';
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0';
+ // This activity has not particular settings but the inherited from the generic
+ // backup_activity_task so here there isn't any class definition, like the ones
+ // existing in /backup/moodle2/backup_settingslib.php (activities section)

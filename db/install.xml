@@ -8,7 +8,11 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="loop_system" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="url" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="chapter" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="page" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="personalized_access" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="1 = personalized access, 0 = shared/anonymous access"/>
         <FIELD NAME="student_role_allocation" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
@@ -19,7 +23,6 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="loop_system" TYPE="foreign" FIELDS="loop_system" REFTABLE="loop_systems" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="loop_systems" COMMENT="This table saves information about loop systems allowed for this moodle.">

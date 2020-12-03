@@ -39,6 +39,12 @@ if ($id) {
 
 require_login($course, true, $cm);
 
-redirect("$CFG->wwwroot/course/view.php?id=$course->id");
+//redirect("$CFG->wwwroot/course/view.php?id=$course->id");
+
+
+$loop_url = str_replace ('https://','',$loop->url);
+$linkurl = new moodle_url('/mod/loop/link.php', ['loop' => $loop_url, 'page' => $loop->page]);
+
+redirect($linkurl);
 
 
