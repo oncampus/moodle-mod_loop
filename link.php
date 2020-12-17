@@ -32,7 +32,7 @@ $sid_encrypted_encoded = urlencode($sid_encrypted);
 
 $moodle_url = str_replace('https://','',$CFG->wwwroot);
 
-$output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php/'.$page.'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
+$output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php/'.urldecode($page).'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
 
 
 echo $output;
