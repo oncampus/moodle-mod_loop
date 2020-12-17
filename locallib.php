@@ -186,4 +186,22 @@ function get_loop_structure($url) {
 	return json_encode($returnarray);
 }
  
- 
+function get_loop_themes($url) {
+	global $CFG, $DB;
+
+	if (!$loop = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '".$url."'" )) {
+		return false;
+	}
+	$allowed_themes = json_decode($loop->allowed_themes);
+
+	$returnarray = array();
+	
+	if (isset($allowed_themes) && is_array($allowed_themes)) {
+		foreach ($allowed_themes as $allowed_theme) {
+			$returnarray[] = array('key'=>$allowed_theme, 'value'=> $allowed_theme);
+		}
+	}	
+	
+	return json_encode($returnarray);
+
+}	

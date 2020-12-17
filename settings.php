@@ -16,7 +16,16 @@ if ($ADMIN->fulltree) {
        '',
        PARAM_TEXT
    ) );    
+    
+    $settings->add( new admin_setting_configtext(
+    		'mod_loop/default_theme',
+    		'Default Theme',
+    		'Default Theme for LOOPs',
+    		'',
+    		PARAM_TEXT
+    ) );    
 
+    
 }
 
 

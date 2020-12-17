@@ -65,17 +65,69 @@ class mod_loop_mod_form extends moodleform_mod {
 		
 		$chapterselect = $mform->addElement('select', 'chapter', get_string('loopinstance_chapter', 'loop'), $chapters);
 		#$chapterselect->setSelected($loop_system->chapter);
+		$chapterselect->setSelected($this->current->chapter);
 		
 		
 		$mform->addElement('text', 'page', get_string('loopinstance_page', 'loop'), array('size'=>'255'));
 		$mform->setType('name', PARAM_RAW);        
 		
         
+
+		$themes=array();
+		$theme_url = '';
+		if ($this->current && isset($this->current->url)) {
+			$theme_url = $this->current->url;
+		} else {
+			$theme_url = $first_url;
+		}
+		$theme_list = json_decode(get_loop_themes($theme_url));
+		foreach ($theme_list as $theme_listitem) {
+			$themes[$theme_listitem->key] = $theme_listitem->value;
+		}
+		
+		$themeselect = $mform->addElement('select', 'theme', get_string('loopinstance_theme', 'loop'), $themes);
+		//$themeselect->setSelected($loop_system->theme);
+		$themeselect->setSelected($this->current->theme);
+				
+		
+		
+		
+		
+		
+		
+		
         $this->standard_coursemodule_elements();
 
         $this->add_action_buttons(true, false, null);
 
     }
 
+    
+    function get_data() {
+    	
+    	$data = parent::get_data();
+    	
+    	if (!$data) {
+    		return false;
+    	}
+    	
+
+    	if (!empty($data)) {
+    		$mform =& $this->_form;
+    	
+    		if(!empty($mform->_submitValues['theme'])) {
+    			$data->theme = $mform->_submitValues['theme'];
+    		}
+    		if(!empty($mform->_submitValues['chapter'])) {
+    			$data->theme = $mform->_submitValues['chapter'];
+    		}    		
+    	
+    	}
+    	
+    	return $data;
+    	
+    }
+    
+    
     
 }

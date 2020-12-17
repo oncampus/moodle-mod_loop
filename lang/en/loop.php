@@ -22,4 +22,6 @@ $string['loopinstance_url'] = 'LOOP';
 $string['loopinstance_introduction'] = 'Intro';
 $string['loopinstance_page'] = 'Page';
 $string['loopinstance_chapter'] = 'Chapter';
+$string['loopinstance_theme'] = 'Theme';
+
 

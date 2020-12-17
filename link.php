@@ -12,6 +12,7 @@ require_login();
 
 $loop = required_param('loop', PARAM_HOST);
 $page = optional_param('page', '', PARAM_RAW);
+$skin = optional_param('skin', '', PARAM_TEXT);
 
 $wikiroot='https://'.$loop.'/mediawiki/';
 
@@ -31,7 +32,8 @@ $sid_encrypted_encoded = urlencode($sid_encrypted);
 
 $moodle_url = str_replace('https://','',$CFG->wwwroot);
 
-$output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
+$output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
+
 
 echo $output;
 

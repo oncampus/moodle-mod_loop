@@ -34,4 +34,35 @@ class mod_loop_external extends external_api {
 				'structure' => new external_value ( PARAM_RAW, 'loop structure' ) 
 		) );
 	}
+	
+	
+	public static function get_themes_parameters() {
+		return new external_function_parameters ( array (
+				'url' => new external_value ( PARAM_TEXT, 'loop url' )
+		) );
+	}
+	
+	public static function get_themes($url) {
+		global $DB, $CFG;
+	
+		$params = self::validate_parameters ( self::get_themes_parameters (), array (
+				'url' => $url
+		)
+		);
+	
+		$return = array ();
+		$return ['themes'] = json_encode ( get_loop_themes ( $url ) );
+	
+		return $return;
+	}
+	
+	public static function get_themes_returns() {
+		return new external_function_parameters ( array (
+				'themes' => new external_value ( PARAM_RAW, 'loop themes' )
+		) );
+	}	
+	
+	
+	
+	
 }

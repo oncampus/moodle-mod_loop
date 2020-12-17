@@ -30,6 +30,8 @@ function loop_supports($feature) {
 
 function loop_add_instance($data, $mform) {
     global $DB;
+    
+    # debugging("LOOP Add Data: ".print_r($data,true), DEBUG_DEVELOPER);
 
     $data->timemodified = time();
     $data->timecreated = time();
@@ -37,7 +39,7 @@ function loop_add_instance($data, $mform) {
     $data->id = $DB->insert_record('loop', $data);
 
     //$data->intro = '';
-    $data->introformat = FORMAT_MOODLE;
+    //$data->introformat = FORMAT_MOODLE;
     
     $loop_system = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '".$data->url."'" );
     
@@ -45,7 +47,7 @@ function loop_add_instance($data, $mform) {
     $data->personalized_access = $loop_system->personalized_access;
     $data->student_role_allocation = $loop_system->student_role_allocation;
     $data->teacher_role_allocation = $loop_system->teacher_role_allocation;
-    $data->theme = '';
+    //$data->theme = '';
     		
     return $data->id;
 }
@@ -54,6 +56,8 @@ function loop_add_instance($data, $mform) {
 function loop_update_instance($data) {
     global $DB;
 
+   # debugging("LOOP Update Data: ".print_r($data,true), DEBUG_DEVELOPER);
+    
     $data->timemodified = time();
     $data->id = $data->instance;
 
@@ -101,7 +105,7 @@ function loop_get_coursemodule_info($coursemodule) {
 	
 	$info->content = format_module_intro('loop', $loop, $coursemodule->id, false);
 	
-	$linkurl = new moodle_url('/mod/loop/link.php', ['loop' => $loop->url, 'page' => $page]);
+	$linkurl = new moodle_url('/mod/loop/link.php', ['loop' => $loop->url, 'page' => $page, 'skin' => $loop->theme]);
 	$info->onclick = "window.open('$linkurl', '', ''); return false;";
 	
 	return $info;

@@ -14,7 +14,16 @@ $functions = array(
         'type' => 'read',
         'ajax' => true,
         'loginrequired' => false,
-    )
+    ),
+	'mod_loop_get_themes' => array(
+			'classname'   => 'mod_loop_external',
+			'methodname'  => 'get_themes',
+			'classpath' => 'mod/loop/externallib.php',
+			'description' => 'get allowed loop themes',
+			'type' => 'read',
+			'ajax' => true,
+			'loginrequired' => false,
+	)		
 );
 
 $services = array(
@@ -22,5 +31,10 @@ $services = array(
             'functions' => array ('mod_loop_get_structure'), 
             'restrictedusers' => 0, 
             'enabled'=>1,
-    )
+    ),
+	'get_themes' => array(
+			'functions' => array ('mod_loop_get_themes'),
+			'restrictedusers' => 0,
+			'enabled'=>1,
+	)		
 );
