@@ -119,7 +119,7 @@ class mod_loop_mod_form extends moodleform_mod {
     			$data->theme = $mform->_submitValues['theme'];
     		}
     		if(!empty($mform->_submitValues['chapter'])) {
-    			$data->theme = $mform->_submitValues['chapter'];
+    			$data->chapter = $mform->_submitValues['chapter'];
     		}    		
     	
     	}
