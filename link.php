@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>  
+ * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +31,28 @@ $sid_encrypted = openssl_encrypt($sid, 'AES-128-ECB', $wgeMoodleLoopToken);
 $sid_encrypted_encoded = urlencode($sid_encrypted);
 
 $moodle_url = str_replace('https://','',$CFG->wwwroot);
+// Lösungsansätze
+/*
+$moodle_url = new moodle_url($wikiroot . 'index.php/' . urldecode($page) ,
+    array(
+    "auth"=>"moodle",
+    "moodle"=>$moodle_url,
+    "loop"=>$loop,
+    "skin"=>$skin,
+    "u"=>$username,
+    "t"=>$token,
+    "p"=>$page,
+    "sid"=>$sid_encrypted_encoded));
+//$output = $moodle_url;
+*/
+
+//$output =  '<a href='.$wikiroot.'index.php/'.urldecode($page).'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded .'" core-link>';
 
 $output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php/'.urldecode($page).'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
+
+
+echo $output;
+
 
 
 echo $output;
