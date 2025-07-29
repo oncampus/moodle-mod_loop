@@ -19,41 +19,30 @@ $wikiroot='https://'.$loop.'/mediawiki/';
 $username=$USER->username;
 $wgeMoodleLoopToken = get_config('mod_loop', 'token');
 
+if (empty($wgeMoodleLoopToken)) {
+    throw new moodle_exception('error:notoken', 'mod_loop', '', null, 'Loop token is not configured in site administration');
+}
+
 $token = md5($username.$wgeMoodleLoopToken);
 
 try {
-	$sid = $DB->get_field('sessions', 'sid', array ('userid'=>$USER->id), IGNORE_MULTIPLE );
+    $sid = $DB->get_field('sessions', 'sid', array ('userid'=>$USER->id), IGNORE_MULTIPLE );
+    if (!$sid) {
+        throw new moodle_exception('error:nosession', 'mod_loop', '', null, 'No valid session found for user');
+    }
 } catch (Exception $e) {
-	die();
+    throw new moodle_exception('error:dberror', 'mod_loop', '', null, 'Database error: ' . $e->getMessage());
 }
 
 $sid_encrypted = openssl_encrypt($sid, 'AES-128-ECB', $wgeMoodleLoopToken);
+if ($sid_encrypted === false) {
+    throw new moodle_exception('error:encryption', 'mod_loop', '', null, 'Failed to encrypt session ID');
+}
 $sid_encrypted_encoded = urlencode($sid_encrypted);
 
 $moodle_url = str_replace('https://','',$CFG->wwwroot);
-// Lösungsansätze
-/*
-$moodle_url = new moodle_url($wikiroot . 'index.php/' . urldecode($page) ,
-    array(
-    "auth"=>"moodle",
-    "moodle"=>$moodle_url,
-    "loop"=>$loop,
-    "skin"=>$skin,
-    "u"=>$username,
-    "t"=>$token,
-    "p"=>$page,
-    "sid"=>$sid_encrypted_encoded));
-//$output = $moodle_url;
-*/
-
-//$output =  '<a href='.$wikiroot.'index.php/'.urldecode($page).'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded .'" core-link>';
 
 $output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php/'.urldecode($page).'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
-
-
-echo $output;
-
-
 
 echo $output;
 

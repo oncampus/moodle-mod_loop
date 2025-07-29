@@ -13,17 +13,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
  * @package   plugintype_pluginname
- * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>  
+ * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 defined('MOODLE_INTERNAL') || die();
- 
-$plugin->version = 2020022736;
-$plugin->requires = 2018111200;
+
+$plugin->version = 2025072900;
+$plugin->requires = 2022112800;
 $plugin->component = 'mod_loop';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '1.0';

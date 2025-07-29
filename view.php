@@ -1,7 +1,7 @@
 <?php
 /**
  * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>  
+ * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -39,8 +39,14 @@ if ($id) {
 
 require_login($course, true, $cm);
 
-//redirect("$CFG->wwwroot/course/view.php?id=$course->id");
-
+// Determine page parameter based on available fields
+if (!empty($loop->page)) {
+    $page = $loop->page;
+} else if (!empty($loop->chapter)) {
+    $page = $loop->chapter;
+} else {
+    $page = '';
+}
 
 $loop_url = str_replace ('https://','',$loop->url);
 $linkurl = new moodle_url('/mod/loop/link.php', ['loop' => $loop->url, 'page' => $page, 'skin' => $loop->theme]);
