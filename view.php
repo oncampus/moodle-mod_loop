@@ -18,7 +18,7 @@
  * Loop module view page
  *
  * @package    mod_loop
- * @author     Tim-Louis Rieck <tim-louis.rieck@oncampus.de>
+ * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

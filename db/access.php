@@ -18,7 +18,7 @@
  * Capability definitions for the loop module.
  *
  * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>
+ * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -16,26 +16,26 @@
 
 /**
  * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>
+ * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $functions = [
     'mod_loop_get_structure' => [
-        'classname'   => 'mod_loop_external',
+        'classname'   => 'mod_loop\external\structure',
         'methodname'  => 'get_structure',
-        'description' => 'get loop structure',
+        'description' => 'Get loop structure for a given URL',
         'type' => 'read',
         'ajax' => true,
         'loginrequired' => false,
     ],
     'mod_loop_get_themes' => [
-            'classname'   => 'mod_loop_external',
-            'methodname'  => 'get_themes',
-            'description' => 'get allowed loop themes',
-            'type' => 'read',
-            'ajax' => true,
-            'loginrequired' => false,
+        'classname'   => 'mod_loop\external\themes',
+        'methodname'  => 'get_themes',
+        'description' => 'Get allowed loop themes for a given URL',
+        'type' => 'read',
+        'ajax' => true,
+        'loginrequired' => false,
     ],
 ];
 
