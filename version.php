@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   plugintype_pluginname
+ * @package   mod_loop
  * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2025072900;
+$plugin->version = 2025072901;
 $plugin->requires = 2022112800;
 $plugin->component = 'mod_loop';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0';
+$plugin->release = '1.0 (Moodle 4.5 compatible)';

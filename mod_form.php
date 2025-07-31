@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * Add loop form
  *
@@ -9,107 +24,106 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once ($CFG->dirroot.'/course/moodleform_mod.php');
-require_once ($CFG->dirroot.'/mod/loop/lib.php');
-require_once ($CFG->dirroot.'/mod/loop/locallib.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/mod/loop/lib.php');
+require_once($CFG->dirroot . '/mod/loop/locallib.php');
 
 class mod_loop_mod_form extends moodleform_mod {
-
     function definition() {
         global $DB, $PAGE;
 
         $PAGE->force_settings_menu();
 
-        $PAGE->requires->js_call_amd('mod_loop/loop', 'init', array());
+        $PAGE->requires->js_call_amd('mod_loop/loop', 'init', []);
 
         $mform = $this->_form;
 
-        $mform->addElement('text', 'name', get_string('loopinstance_name', 'loop'), array('size'=>'64'));
+        $mform->addElement('text', 'name', get_string('loopinstance_name', 'loop'), ['size' => '64']);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
 
         $this->standard_intro_elements(get_string('loopinstance_introduction', 'loop'));
 
-        $loops = array(
-        	/* 'none' => '---' */
-        );
-        $loop_systems = $DB->get_records('loop_systems');
-        $first_url = '';
-		if ($loop_systems) {
-			foreach ($loop_systems as $loop_system) {
-				if ($first_url == '') {
-					$first_url = $loop_system->url;
-				}
-				$loops[$loop_system->url] = $loop_system->name. ' (' . $loop_system->url .')';
-			}
-		}
-		$mform->addElement('select', 'url', get_string('loopinstance_url', 'loop'), $loops);
-		$mform->addRule('url', null, 'required', null, 'client');
+        $loops = [
+            /* 'none' => '---' */
+        ];
+        $loopsystems = $DB->get_records('loop_systems');
+        $firsturl = '';
+        if ($loopsystems) {
+            foreach ($loopsystems as $loopsystem) {
+                if ($firsturl == '') {
+                    $firsturl = $loopsystem->url;
+                }
+                $loops[$loopsystem->url] = $loopsystem->name . ' (' . $loopsystem->url . ')';
+            }
+        }
+        $mform->addElement('select', 'url', get_string('loopinstance_url', 'loop'), $loops);
+        $mform->addRule('url', null, 'required', null, 'client');
 
 
-		$chapters=array();
-		$chapter_url = '';
-		if ($this->current && isset($this->current->url)) {
-			$chapter_url = $this->current->url;
-		} else {
-			$chapter_url = $first_url;
-		}
+        $chapters = [];
+        $chapterurl = '';
+        if ($this->current && isset($this->current->url)) {
+            $chapterurl = $this->current->url;
+        } else {
+            $chapterurl = $firsturl;
+        }
 
-		// Add error handling for API calls
-		if ($chapter_url) {
-			$structurejson = get_loop_structure($chapter_url);
-			if ($structurejson !== false) {
-				$structure = json_decode($structurejson);
-				if ($structure) {
-					foreach ($structure as $structureitem) {
-						$chapters[$structureitem->key] = $structureitem->value;
-					}
-				}
-			}
-		}
-
-
-
-
-		$chapterselect = $mform->addElement('select', 'chapter', get_string('loopinstance_chapter', 'loop'), $chapters);
-		#$chapterselect->setSelected($loop_system->chapter);
-		if (isset($this->current->chapter)) {
-			$chapterselect->setSelected($this->current->chapter);
-		}
-
-
-		$mform->addElement('text', 'page', get_string('loopinstance_page', 'loop'), array('size'=>'255'));
-		$mform->setType('page', PARAM_RAW);
+        // Add error handling for API calls
+        if ($chapterurl) {
+            $structurejson = get_loop_structure($chapterurl);
+            if ($structurejson !== false) {
+                $structure = json_decode($structurejson);
+                if ($structure) {
+                    foreach ($structure as $structureitem) {
+                        $chapters[$structureitem->key] = $structureitem->value;
+                    }
+                }
+            }
+        }
 
 
 
-		$themes=array();
-		$theme_url = '';
-		if ($this->current && isset($this->current->url)) {
-			$theme_url = $this->current->url;
-		} else {
-			$theme_url = $first_url;
-		}
 
-		// Add error handling for themes API call
-		if ($theme_url) {
-			$themesjson = get_loop_themes($theme_url);
-			if ($themesjson !== false) {
-				$theme_list = json_decode($themesjson);
-				if ($theme_list) {
-					foreach ($theme_list as $theme_listitem) {
-						$themes[$theme_listitem->key] = $theme_listitem->value;
-					}
-				}
-			}
-		}
+        $chapterselect = $mform->addElement('select', 'chapter', get_string('loopinstance_chapter', 'loop'), $chapters);
+        // $chapterselect->setSelected($loop_system->chapter);
+        if (isset($this->current->chapter)) {
+            $chapterselect->setSelected($this->current->chapter);
+        }
 
-		$themeselect = $mform->addElement('select', 'theme', get_string('loopinstance_theme', 'loop'), $themes);
-		//$themeselect->setSelected($loop_system->theme);
-		if (isset($this->current->theme)) {
-			$themeselect->setSelected($this->current->theme);
-		}
+
+        $mform->addElement('text', 'page', get_string('loopinstance_page', 'loop'), ['size' => '255']);
+        $mform->setType('page', PARAM_RAW);
+
+
+
+        $themes = [];
+        $themeurl = '';
+        if ($this->current && isset($this->current->url)) {
+            $themeurl = $this->current->url;
+        } else {
+            $themeurl = $firsturl;
+        }
+
+        // Add error handling for themes API call
+        if ($themeurl) {
+            $themesjson = get_loop_themes($themeurl);
+            if ($themesjson !== false) {
+                $themelist = json_decode($themesjson);
+                if ($themelist) {
+                    foreach ($themelist as $themelistitem) {
+                        $themes[$themelistitem->key] = $themelistitem->value;
+                    }
+                }
+            }
+        }
+
+        $themeselect = $mform->addElement('select', 'theme', get_string('loopinstance_theme', 'loop'), $themes);
+        // $themeselect->setSelected($loop_system->theme);
+        if (isset($this->current->theme)) {
+            $themeselect->setSelected($this->current->theme);
+        }
 
 
 
@@ -121,35 +135,51 @@ class mod_loop_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements();
 
         $this->add_action_buttons(true, false, null);
-
     }
 
 
     function get_data() {
 
-    	$data = parent::get_data();
+        $data = parent::get_data();
 
-    	if (!$data) {
-    		return false;
-    	}
+        if (!$data) {
+            return false;
+        }
 
 
-    	if (!empty($data)) {
-    		$mform =& $this->_form;
+        if (!empty($data)) {
+            $mform =& $this->_form;
 
-    		if(!empty($mform->_submitValues['theme'])) {
-    			$data->theme = $mform->_submitValues['theme'];
-    		}
-    		if(!empty($mform->_submitValues['chapter'])) {
-    			$data->chapter = $mform->_submitValues['chapter'];
-    		}
+            if (!empty($mform->_submitValues['theme'])) {
+                $data->theme = $mform->_submitValues['theme'];
+            }
+            if (!empty($mform->_submitValues['chapter'])) {
+                $data->chapter = $mform->_submitValues['chapter'];
+            }
+        }
 
-    	}
-
-    	return $data;
-
+        return $data;
     }
 
+    /**
+     * Form validation
+     * @param array $data
+     * @param array $files
+     * @return array
+     */
+    public function validation($data, $files) {
+        $errors = parent::validation($data, $files);
 
+        // Validate URL selection
+        if (empty($data['url'])) {
+            $errors['url'] = get_string('required');
+        }
 
+        // Validate that page field is not too long if provided
+        if (!empty($data['page']) && strlen($data['page']) > 1024) {
+            $errors['page'] = get_string('err_maxlength', 'form', 1024);
+        }
+
+        return $errors;
+    }
 }

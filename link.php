@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * @package mod_loop
  * @author  Marc Vorreiter <marc.vorreiter@th-luebeck.de>
@@ -7,26 +22,26 @@
 
 require_once("../../config.php");
 
-Global $CFG, $USER;
+global $CFG, $USER;
 require_login();
 
 $loop = required_param('loop', PARAM_HOST);
 $page = optional_param('page', '', PARAM_RAW);
 $skin = optional_param('skin', '', PARAM_TEXT);
 
-$wikiroot='https://'.$loop.'/mediawiki/';
+$wikiroot = 'https://' . $loop . '/mediawiki/';
 
-$username=$USER->username;
-$wgeMoodleLoopToken = get_config('mod_loop', 'token');
+$username = $USER->username;
+$wgemoodlelooptoken = get_config('mod_loop', 'token');
 
-if (empty($wgeMoodleLoopToken)) {
+if (empty($wgemoodlelooptoken)) {
     throw new moodle_exception('error:notoken', 'mod_loop', '', null, 'Loop token is not configured in site administration');
 }
 
-$token = md5($username.$wgeMoodleLoopToken);
+$token = md5($username . $wgemoodlelooptoken);
 
 try {
-    $sid = $DB->get_field('sessions', 'sid', array ('userid'=>$USER->id), IGNORE_MULTIPLE );
+    $sid = $DB->get_field('sessions', 'sid', ['userid' => $USER->id], IGNORE_MULTIPLE);
     if (!$sid) {
         throw new moodle_exception('error:nosession', 'mod_loop', '', null, 'No valid session found for user');
     }
@@ -34,15 +49,14 @@ try {
     throw new moodle_exception('error:dberror', 'mod_loop', '', null, 'Database error: ' . $e->getMessage());
 }
 
-$sid_encrypted = openssl_encrypt($sid, 'AES-128-ECB', $wgeMoodleLoopToken);
-if ($sid_encrypted === false) {
+$sidencrypted = openssl_encrypt($sid, 'AES-128-ECB', $wgemoodlelooptoken);
+if ($sidencrypted === false) {
     throw new moodle_exception('error:encryption', 'mod_loop', '', null, 'Failed to encrypt session ID');
 }
-$sid_encrypted_encoded = urlencode($sid_encrypted);
+$sidencryptedencoded = urlencode($sidencrypted);
 
-$moodle_url = str_replace('https://','',$CFG->wwwroot);
+$moodleurl = str_replace('https://', '', $CFG->wwwroot);
 
-$output =  '<html><head><meta http-equiv="refresh" content="0; URL='.$wikiroot.'index.php/'.urldecode($page).'?auth=moodle&moodle='.$moodle_url.'&loop='.$loop.'&skin='.$skin.'&u='.$username.'&t='.$token.'&p='.$page. '&sid=' . $sid_encrypted_encoded . '"></head></html>';
+$output = '<html><head><meta http-equiv="refresh" content="0; URL=' . $wikiroot . 'index.php/' . urldecode($page) . '?auth=moodle&moodle=' . $moodleurl . '&loop=' . $loop . '&skin=' . $skin . '&u=' . $username . '&t=' . $token . '&p=' . $page . '&sid=' . $sidencryptedencoded . '"></head></html>';
 
 echo $output;
-
