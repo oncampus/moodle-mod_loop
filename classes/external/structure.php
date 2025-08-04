@@ -66,7 +66,7 @@ class structure extends external_api {
 
         $url = $params['url'];
 
-        // Validate that the loop system exists
+        // Validate that the loop system exists.
         if (!$DB->record_exists('loop_systems', ['url' => $url])) {
             return [
                 'structure' => null,
@@ -75,13 +75,13 @@ class structure extends external_api {
                         'item' => 'url',
                         'itemid' => 0,
                         'warningcode' => 'invalidsystem',
-                        'message' => 'Loop system not found'
-                    ]
-                ]
+                        'message' => 'Loop system not found',
+                    ],
+                ],
             ];
         }
 
-        // Get the structure using the existing function
+        // Get the structure using the existing function.
         $structure = get_loop_structure($url);
 
         if ($structure === false) {
@@ -92,15 +92,15 @@ class structure extends external_api {
                         'item' => 'url',
                         'itemid' => 0,
                         'warningcode' => 'apierror',
-                        'message' => 'Failed to retrieve loop structure'
-                    ]
-                ]
+                        'message' => 'Failed to retrieve loop structure',
+                    ],
+                ],
             ];
         }
 
         return [
             'structure' => $structure,
-            'warnings' => []
+            'warnings' => [],
         ];
     }
 
@@ -111,8 +111,8 @@ class structure extends external_api {
      */
     public static function get_structure_returns(): external_single_structure {
         return new external_single_structure([
-            'structure' => new external_value(PARAM_RAW, 'Loop structure as JSON string', VALUE_ALLOW_NULL),
-            'warnings' => new external_warnings()
+            'structure' => new external_value(PARAM_RAW, 'Loop structure as JSON string', VALUE_OPTIONAL),
+            'warnings' => new external_warnings(),
         ]);
     }
 }

@@ -66,7 +66,7 @@ class themes extends external_api {
 
         $url = $params['url'];
 
-        // Validate that the loop system exists
+        // Validate that the loop system exists.
         if (!$DB->record_exists('loop_systems', ['url' => $url])) {
             return [
                 'themes' => null,
@@ -75,13 +75,13 @@ class themes extends external_api {
                         'item' => 'url',
                         'itemid' => 0,
                         'warningcode' => 'invalidsystem',
-                        'message' => 'Loop system not found'
-                    ]
-                ]
+                        'message' => 'Loop system not found',
+                    ],
+                ],
             ];
         }
 
-        // Get the themes using the existing function
+        // Get the themes using the existing function.
         $themes = get_loop_themes($url);
 
         if ($themes === false) {
@@ -92,15 +92,15 @@ class themes extends external_api {
                         'item' => 'url',
                         'itemid' => 0,
                         'warningcode' => 'apierror',
-                        'message' => 'Failed to retrieve loop themes'
-                    ]
-                ]
+                        'message' => 'Failed to retrieve loop themes',
+                    ],
+                ],
             ];
         }
 
         return [
             'themes' => $themes,
-            'warnings' => []
+            'warnings' => [],
         ];
     }
 
@@ -111,8 +111,8 @@ class themes extends external_api {
      */
     public static function get_themes_returns(): external_single_structure {
         return new external_single_structure([
-            'themes' => new external_value(PARAM_RAW, 'Loop themes as JSON string', VALUE_ALLOW_NULL),
-            'warnings' => new external_warnings()
+            'themes' => new external_value(PARAM_RAW, 'Loop themes as JSON string', VALUE_OPTIONAL),
+            'warnings' => new external_warnings(),
         ]);
     }
 }
