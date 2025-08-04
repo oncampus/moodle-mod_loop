@@ -15,15 +15,24 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Loop library.
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
 
 global $CFG;
 
+/**
+ * Check if the feature is supported.
+ *
+ * @param string $feature
+ * @return bool|null
+ */
 function loop_supports(string $feature): ?bool {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
@@ -44,7 +53,7 @@ function loop_supports(string $feature): ?bool {
 }
 
 /**
- * Add a new loop instance
+ * Add a new loop instance.
  *
  * @param object $data The form data
  * @param object $mform The form object
@@ -58,7 +67,9 @@ function loop_add_instance(object $data, object $mform): int {
 
     $data->id = $DB->insert_record('loop', $data);
 
-    $loopsystem = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '" . $data->url . "'");
+    $loopsystem = $DB->get_record_sql(
+        "SELECT * FROM {loop_systems} WHERE " . $DB->sql_compare_text('url') . " = '" . $data->url . "'"
+    );
 
     $data->personalized_access = $loopsystem->personalized_access;
     $data->student_role_allocation = $loopsystem->student_role_allocation;
@@ -68,6 +79,12 @@ function loop_add_instance(object $data, object $mform): int {
 }
 
 
+/**
+ * Update a loop instance.
+ *
+ * @param object $data
+ * @return bool
+ */
 function loop_update_instance(object $data): bool {
     global $DB;
 
@@ -80,6 +97,12 @@ function loop_update_instance(object $data): bool {
 }
 
 
+/**
+ * Delete a loop instance.
+ *
+ * @param int $id
+ * @return bool
+ */
 function loop_delete_instance(int $id): bool {
     global $DB;
 
@@ -97,6 +120,12 @@ function loop_delete_instance(int $id): bool {
 }
 
 
+/**
+ * Get course module info.
+ *
+ * @param object $coursemodule
+ * @return cached_cm_info|null
+ */
 function loop_get_coursemodule_info(object $coursemodule): ?cached_cm_info {
     global $DB;
 

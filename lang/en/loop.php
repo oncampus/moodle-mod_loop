@@ -15,9 +15,10 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'loop', language 'en'
+ * Strings for component 'loop', language 'en'.
  *
- * @package mod_loop
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
  * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
