@@ -18,11 +18,12 @@
  * Loop module view page
  *
  * @package    mod_loop
+ * @copyright  2025 oncampus GmbH
  * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once("../../config.php");
+require_once('../../config.php');
 
 $id = optional_param('id', 0, PARAM_INT);    // Course Module ID.
 $l = optional_param('l', 0, PARAM_INT);     // Loop ID.
@@ -30,32 +31,32 @@ $l = optional_param('l', 0, PARAM_INT);     // Loop ID.
 if ($id) {
     $PAGE->set_url('/mod/loop/index.php', ['id' => $id]);
     if (! $cm = get_coursemodule_from_id('loop', $id)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 
     if (! $course = $DB->get_record("course", ["id" => $cm->course])) {
-        print_error('coursemisconf');
+        throw new moodle_exception('coursemisconf');
     }
 
     if (! $loop = $DB->get_record("loop", ["id" => $cm->instance])) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 } else {
     $PAGE->set_url('/mod/loop/index.php', ['l' => $l]);
     if (! $loop = $DB->get_record("loop", ["id" => $l])) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
     if (! $course = $DB->get_record("course", ["id" => $loop->course])) {
-        print_error('coursemisconf');
+        throw new moodle_exception('coursemisconf');
     }
     if (! $cm = get_coursemodule_from_instance("loop", $loop->id, $course->id)) {
-        print_error('invalidcoursemodule');
+        throw new moodle_exception('invalidcoursemodule');
     }
 }
 
 require_login($course, true, $cm);
 
-// Determine page parameter based on available fields
+// Determine page parameter based on available fields.
 if (!empty($loop->page)) {
     $page = $loop->page;
 } else if (!empty($loop->chapter)) {
