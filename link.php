@@ -60,26 +60,6 @@ $sidencryptedencoded = urlencode($sidencrypted);
 
 $moodleurl = str_replace('https://', '', $CFG->wwwroot);
 
-// Erzeuge die Ziel-URL robust und übersichtlich mit http_build_query, um Fehler bei der Verkettung und Kodierung zu vermeiden.
-$params = [
-    'auth'   => 'moodle',
-    'moodle' => $moodleurl,
-    'loop'   => $loop,
-    'skin'   => $skin,
-    'u'      => $username,
-    't'      => $token,
-    'p'      => $page,
-    'sid'    => $sidencryptedencoded,
-];
-$targeturl = $wikiroot . 'index.php/' . urldecode($page) . '?' . http_build_query($params);
-
-// Generiere das HTML für den Redirect, Zeilenlänge bleibt unter 180 Zeichen.
-$output = <<<HTML
-<html>
-<head>
-    <meta http-equiv="refresh" content="0; URL={$targeturl}">
-</head>
-</html>
-HTML;
+$output = '<html><head><meta http-equiv="refresh" content="0; URL=' . $wikiroot . 'index.php/' . urldecode($page) . '?auth=moodle&moodle=' . $moodleurl . '&loop=' . $loop . '&skin=' . $skin . '&u=' . $username . '&t=' . $token . '&p=' . $page . '&sid=' . $sidencryptedencoded . '"></head></html>';
 
 echo $output;
