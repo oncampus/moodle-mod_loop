@@ -16,9 +16,18 @@
 
 /**
  * Structure step to restore one loop activity
- * @package mod_loop
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_loop_activity_structure_step extends restore_activity_structure_step {
+    /**
+     * Define the structure of the restore.
+     *
+     * @return restore_path_element
+     */
     protected function define_structure() {
 
         $paths = [];
@@ -26,10 +35,15 @@ class restore_loop_activity_structure_step extends restore_activity_structure_st
 
         $paths[] = new restore_path_element('loop', '/activity/loop');
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
+    /**
+     * Process the loop.
+     *
+     * @param array $data
+     */
     protected function process_loop($data) {
         global $DB;
 
@@ -37,16 +51,18 @@ class restore_loop_activity_structure_step extends restore_activity_structure_st
         $oldid = $data->id;
         $data->course = $this->get_courseid();
 
-
-        // insert the loop record
+        // Insert the loop record.
         $newitemid = $DB->insert_record('loop', $data);
-        // immediately after inserting "activity" record, call this
+        // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
 
 
+    /**
+     * After execute.
+     */
     protected function after_execute() {
-        // Add loop related files, no need to match by itemname (just internally handled context)
+        // Add loop related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_loop', 'intro', null);
     }
 }

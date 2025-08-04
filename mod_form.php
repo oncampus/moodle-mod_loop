@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Add loop form
+ * Add loop form.
  *
- * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
@@ -29,6 +30,9 @@ require_once($CFG->dirroot . '/mod/loop/lib.php');
 require_once($CFG->dirroot . '/mod/loop/locallib.php');
 
 class mod_loop_mod_form extends moodleform_mod {
+    /**
+     * Definition.
+     */
     function definition() {
         global $DB, $PAGE;
 
@@ -41,7 +45,6 @@ class mod_loop_mod_form extends moodleform_mod {
         $mform->addElement('text', 'name', get_string('loopinstance_name', 'loop'), ['size' => '64']);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
-
 
         $this->standard_intro_elements(get_string('loopinstance_introduction', 'loop'));
 
@@ -60,7 +63,6 @@ class mod_loop_mod_form extends moodleform_mod {
         }
         $mform->addElement('select', 'url', get_string('loopinstance_url', 'loop'), $loops);
         $mform->addRule('url', null, 'required', null, 'client');
-
 
         $chapters = [];
         $chapterurl = '';
@@ -83,20 +85,14 @@ class mod_loop_mod_form extends moodleform_mod {
             }
         }
 
-
-
-
         $chapterselect = $mform->addElement('select', 'chapter', get_string('loopinstance_chapter', 'loop'), $chapters);
         // $chapterselect->setSelected($loop_system->chapter);
         if (isset($this->current->chapter)) {
             $chapterselect->setSelected($this->current->chapter);
         }
 
-
         $mform->addElement('text', 'page', get_string('loopinstance_page', 'loop'), ['size' => '255']);
         $mform->setType('page', PARAM_RAW);
-
-
 
         $themes = [];
         $themeurl = '';
@@ -125,19 +121,17 @@ class mod_loop_mod_form extends moodleform_mod {
             $themeselect->setSelected($this->current->theme);
         }
 
-
-
-
-
-
-
-
         $this->standard_coursemodule_elements();
 
         $this->add_action_buttons(true, false, null);
     }
 
 
+    /**
+     * Get data.
+     *
+     * @return bool|stdClass
+     */
     function get_data() {
 
         $data = parent::get_data();
@@ -145,7 +139,6 @@ class mod_loop_mod_form extends moodleform_mod {
         if (!$data) {
             return false;
         }
-
 
         if (!empty($data)) {
             $mform =& $this->_form;
@@ -163,6 +156,7 @@ class mod_loop_mod_form extends moodleform_mod {
 
     /**
      * Form validation
+     *
      * @param array $data
      * @param array $files
      * @return array
@@ -170,12 +164,12 @@ class mod_loop_mod_form extends moodleform_mod {
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        // Validate URL selection
+        // Validate URL selection.
         if (empty($data['url'])) {
             $errors['url'] = get_string('required');
         }
 
-        // Validate that page field is not too long if provided
+        // Validate that page field is not too long if provided.
         if (!empty($data['page']) && strlen($data['page']) > 1024) {
             $errors['page'] = get_string('err_maxlength', 'form', 1024);
         }

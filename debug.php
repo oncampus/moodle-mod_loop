@@ -55,7 +55,7 @@ $tabs = [
     'config' => 'Configuration',
     'database' => 'Database',
     'systems' => 'Loop Systems',
-    'logs' => 'Logs'
+    'logs' => 'Logs',
 ];
 
 foreach ($tabs as $tab => $label) {
@@ -63,7 +63,7 @@ foreach ($tabs as $tab => $label) {
     echo html_writer::tag('button', $label, [
         'class' => 'debug-tab ' . $active,
         'data-tab' => $tab,
-        'onclick' => 'switchTab("' . $tab . '")'
+        'onclick' => 'switchTab("' . $tab . '")',
     ]);
 }
 echo html_writer::end_div();
@@ -77,7 +77,7 @@ echo html_writer::start_tag('form', ['method' => 'POST', 'id' => 'api-test-form'
 echo html_writer::tag('input', '', [
     'type' => 'hidden',
     'name' => 'sesskey',
-    'value' => sesskey()
+    'value' => sesskey(),
 ]);
 
 echo html_writer::start_div('form-group');
@@ -85,7 +85,7 @@ echo html_writer::label('Test Type:', 'test-type');
 echo html_writer::select([
     'moodalis' => 'Moodalis API',
     'structure' => 'Loop Structure API',
-    'themes' => 'Loop Themes API'
+    'themes' => 'Loop Themes API',
 ], 'test_type', 'moodalis', false, ['id' => 'test-type']);
 echo html_writer::end_div();
 
@@ -95,14 +95,14 @@ echo html_writer::tag('input', '', [
     'type' => 'text',
     'name' => 'loop_url',
     'id' => 'loop-url',
-    'placeholder' => 'e.g., moodalis.oncampus.de'
+    'placeholder' => 'e.g., moodalis.oncampus.de',
 ]);
 echo html_writer::end_div();
 
 echo html_writer::tag('button', 'Run Test', [
     'type' => 'submit',
     'class' => 'btn btn-primary',
-    'name' => 'run_test'
+    'name' => 'run_test',
 ]);
 echo html_writer::end_tag('form');
 
@@ -142,7 +142,7 @@ $token = get_config('mod_loop', 'token');
 echo html_writer::start_div('config-item');
 echo html_writer::tag('strong', 'API Token: ');
 echo html_writer::tag('span', $token ? substr($token, 0, 10) . '...' : 'Not set', [
-    'class' => $token ? 'config-value' : 'config-error'
+    'class' => $token ? 'config-value' : 'config-error',
 ]);
 echo html_writer::end_div();
 
@@ -205,12 +205,12 @@ echo html_writer::start_tag('form', ['method' => 'POST']);
 echo html_writer::tag('input', '', [
     'type' => 'hidden',
     'name' => 'sesskey',
-    'value' => sesskey()
+    'value' => sesskey(),
 ]);
 echo html_writer::tag('button', 'Refresh Loop Systems', [
     'type' => 'submit',
     'class' => 'btn btn-secondary',
-    'name' => 'refresh_systems'
+    'name' => 'refresh_systems',
 ]);
 echo html_writer::end_tag('form');
 
@@ -430,7 +430,7 @@ echo $output->footer();
 /**
  * Test Moodalis API
  */
-function testMoodalisAPI(): void {
+function testmoodalisapi(): void {
     global $CFG;
 
     $token = get_config('mod_loop', 'token');
@@ -484,7 +484,7 @@ function testMoodalisAPI(): void {
 /**
  * Test Structure API
  */
-function testStructureAPI(string $url): void {
+function teststructureapi(string $url): void {
     if (empty($url)) {
         echo html_writer::tag('p', 'Error: No loop URL provided.', ['class' => 'debug-error']);
         return;
@@ -517,7 +517,7 @@ function testStructureAPI(string $url): void {
 /**
  * Test Themes API
  */
-function testThemesAPI(string $url): void {
+function testthemesapi(string $url): void {
     if (empty($url)) {
         echo html_writer::tag('p', 'Error: No loop URL provided.', ['class' => 'debug-error']);
         return;

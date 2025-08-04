@@ -60,7 +60,6 @@ function loop_add_instance(object $data, object $mform): int {
 
     $loopsystem = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '" . $data->url . "'");
 
-
     $data->personalized_access = $loopsystem->personalized_access;
     $data->student_role_allocation = $loopsystem->student_role_allocation;
     $data->teacher_role_allocation = $loopsystem->teacher_role_allocation;
@@ -112,7 +111,6 @@ function loop_get_coursemodule_info(object $coursemodule): ?cached_cm_info {
     } else {
         $page = '';
     }
-
 
     $info = new cached_cm_info();
     $info->name = $loop->name;

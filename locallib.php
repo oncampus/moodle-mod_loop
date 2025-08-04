@@ -54,7 +54,6 @@ function get_allowed_loops() {
                 // update
                 mtrace("LOOP already exisits");
 
-
                 $loopsystem = $DB->get_record('loop_systems', ['externalid' => $loop]);
                 $processedloops[] = $loopsystem->id;
 
@@ -101,7 +100,6 @@ function get_allowed_loops() {
             }
         }
 
-
         // delete all not processed loops
         if (!empty($processedloops)) {
             $placeholders = str_repeat('?,', count($processedloops) - 1) . '?';
@@ -119,7 +117,6 @@ function get_allowed_loops() {
         }
     }
 
-
     return true;
 }
 
@@ -128,13 +125,9 @@ function get_allowed_loops() {
 function get_loop_structure($url) {
     global $CFG, $DB;
 
-
-
     if (!$loop = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '" . $url . "'")) {
         return false;
     }
-
-
 
     $wgemoodlelooptoken = get_config('mod_loop', 'token');
 
@@ -153,7 +146,6 @@ function get_loop_structure($url) {
 
     $result = curl_exec($ch);
 
-
     if (curl_errno($ch)) {
         return false;
     }
@@ -162,7 +154,6 @@ function get_loop_structure($url) {
 
     $structureresult = json_decode($result, true);
     $structure = $structureresult['loopauth-structure']['structure'];
-
 
     $return = [];
     $return['---'] = '---';
@@ -184,8 +175,6 @@ function get_loop_structure($url) {
         $returnarray[] = ['key' => $key, 'value' => $value];
         $n++;
     }
-
-
 
     return json_encode($returnarray);
 }

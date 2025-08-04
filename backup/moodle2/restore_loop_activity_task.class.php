@@ -15,32 +15,46 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * loop restore task that provides all the settings and steps to perform one
- * complete restore of the activity
- * @package mod_loop
+ * Loop restore task that provides all the settings and steps to perform one
+ * complete restore of the activity.
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/loop/backup/moodle2/restore_loop_stepslib.php'); // Because it exists (must)
+require_once($CFG->dirroot . '/mod/loop/backup/moodle2/restore_loop_stepslib.php'); // Because it exists (must).
 
+/**
+ * Loop restore task that provides all the settings and steps to perform one
+ * complete restore of the activity.
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class restore_loop_activity_task extends restore_activity_task {
     /**
      * Define (add) particular settings this activity can have
      */
     protected function define_my_settings() {
-        // No particular settings for this activity
+        // No particular settings for this activity.
     }
 
     /**
      * Define (add) particular steps this activity can have
      */
     protected function define_my_steps() {
-        // loop only has one structure step
+        // Loop only has one structure step.
         $this->add_step(new restore_loop_activity_structure_step('loop_structure', 'loop.xml'));
     }
 
     /**
      * Define the contents in the activity that must be
-     * processed by the link decoder
+     * processed by the link decoder.
      */
     public static function define_decode_contents() {
         $contents = [];
@@ -52,7 +66,7 @@ class restore_loop_activity_task extends restore_activity_task {
 
     /**
      * Define the decoding rules for links belonging
-     * to the activity to be executed by the link decoder
+     * to the activity to be executed by the link decoder.
      */
     public static function define_decode_rules() {
         $rules = [];
@@ -78,7 +92,6 @@ class restore_loop_activity_task extends restore_activity_task {
         $rules[] = new restore_log_rule('loop', 'choose', 'view.php?id={course_module}', '{loop}');
         $rules[] = new restore_log_rule('loop', 'choose again', 'view.php?id={course_module}', '{loop}');
 
-
         return $rules;
     }
 
@@ -95,7 +108,7 @@ class restore_loop_activity_task extends restore_activity_task {
     public static function define_restore_log_rules_for_course() {
         $rules = [];
 
-        // Fix old wrong uses (missing extension)
+        // Fix old wrong uses (missing extension).
         $rules[] = new restore_log_rule('loop', 'view all', 'index?id={course}', null, null, null, 'index.php?id={course}');
         $rules[] = new restore_log_rule('loop', 'view all', 'index.php?id={course}', null);
 
