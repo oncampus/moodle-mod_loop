@@ -18,11 +18,13 @@
  * External API for Loop themes operations
  *
  * @package    mod_loop
+ * @copyright  2025 oncampus GmbH
  * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_loop\external;
+
 
 use core_external\external_api;
 use core_external\external_function_parameters;

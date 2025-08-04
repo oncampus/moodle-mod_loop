@@ -15,16 +15,23 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Loop local library.
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
+/**
+ * Get allowed loops.
+ *
+ * @return bool
+ */
 function get_allowed_loops() {
     global $DB;
 
-    mtrace("Getting list of allowed LOOPs from Moodalis");
+    mtrace('Getting list of allowed LOOPs from Moodalis');
 
     $token = get_config('mod_loop', 'token');
 
@@ -39,7 +46,6 @@ function get_allowed_loops() {
     }
 
     $loops = json_decode($jsonresult, true);
-    // mtrace (print_r($loops,true));
 
     curl_close($cha);
 
@@ -51,7 +57,6 @@ function get_allowed_loops() {
             unset($loopsystem);
 
             if ($DB->record_exists('loop_systems', ['externalid' => $loop])) {
-                // update
                 mtrace("LOOP already exisits");
 
                 $loopsystem = $DB->get_record('loop_systems', ['externalid' => $loop]);
@@ -83,7 +88,7 @@ function get_allowed_loops() {
                 }
             } else {
                 mtrace("New LOOP");
-                // insert
+
                 $newloopsystem = new stdClass();
                 $newloopsystem->externalid = $loop;
                 $newloopsystem->name = $loopdata['name'];
@@ -100,7 +105,6 @@ function get_allowed_loops() {
             }
         }
 
-        // delete all not processed loops
         if (!empty($processedloops)) {
             $placeholders = str_repeat('?,', count($processedloops) - 1) . '?';
             $sql = "SELECT * FROM {loop_systems} WHERE id NOT IN ($placeholders)";
@@ -120,8 +124,12 @@ function get_allowed_loops() {
     return true;
 }
 
-
-
+/**
+ * Get loop structure.
+ *
+ * @param string $url
+ * @return bool|string
+ */
 function get_loop_structure($url) {
     global $CFG, $DB;
 
@@ -133,15 +141,19 @@ function get_loop_structure($url) {
 
     $moodleurl = str_replace('https://', '', $CFG->wwwroot);
 
-    $loopstructureurl = 'https://' . $url . '/mediawiki/api.php?action=loopauth-structure&auth=api&m=' . $moodleurl . '&t=' . $wgemoodlelooptoken . '&format=json';
+    $loopstructureurl = 'https://' .
+                        $url .
+                        '/mediawiki/api.php?action=loopauth-structure&auth=api&m=' .
+                        $moodleurl .
+                        '&t=' .
+                        $wgemoodlelooptoken .
+                        '&format=json';
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $loopstructureurl);
     curl_setopt($ch, CURLOPT_FAILONERROR, 1);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-    // curl_setopt($ch, CURLOPT_TIMEOUT, intval($timeout));
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
     $result = curl_exec($ch);
@@ -179,6 +191,12 @@ function get_loop_structure($url) {
     return json_encode($returnarray);
 }
 
+/**
+ * Get loop themes.
+ *
+ * @param string $url
+ * @return bool|string
+ */
 function get_loop_themes($url) {
     global $CFG, $DB;
 

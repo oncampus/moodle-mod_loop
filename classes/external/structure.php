@@ -18,6 +18,7 @@
  * External API for Loop structure operations
  *
  * @package    mod_loop
+ * @copyright  2025 oncampus GmbH
  * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -34,6 +35,7 @@ use core_external\external_warnings;
  * External API for Loop structure operations
  *
  * @package    mod_loop
+ * @copyright  2025 oncampus GmbH
  * @author     Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

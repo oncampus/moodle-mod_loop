@@ -15,17 +15,18 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package mod_loop
+ * Scheduled task to get allowed loops from external systems
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
  * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_loop\task;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
- * Scheduled task to get allowed loops from external systems
+ * Scheduled task to get allowed loops from external systems.
  */
 class get_allowed_loops_task extends \core\task\scheduled_task {
     /**
@@ -50,7 +51,7 @@ class get_allowed_loops_task extends \core\task\scheduled_task {
             require_once($CFG->dirroot . '/mod/loop/locallib.php');
             get_allowed_loops();
         } catch (\Exception $e) {
-            // Log the error and re-throw for retry mechanism
+            // Log the error and re-throw for retry mechanism.
             debugging('Loop task failed: ' . $e->getMessage(), DEBUG_DEVELOPER);
             throw $e;
         }

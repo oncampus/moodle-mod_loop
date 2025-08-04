@@ -15,9 +15,12 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package mod_loop
- * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Loop module index page
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
@@ -29,5 +32,5 @@ require_login();
 $id = required_param('id', PARAM_INT);
 
 if (!$course = $DB->get_record('course', ['id' => $id])) {
-    print_error('Course ID is incorrect');
+    throw new moodle_exception('Course ID is incorrect');
 }
