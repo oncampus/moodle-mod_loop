@@ -29,11 +29,19 @@ require_once($CFG->dirroot . '/course/moodleform_mod.php');
 require_once($CFG->dirroot . '/mod/loop/lib.php');
 require_once($CFG->dirroot . '/mod/loop/locallib.php');
 
+/**
+ * Loop module form.
+ *
+ * @package   mod_loop
+ * @copyright 2025 oncampus GmbH
+ * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class mod_loop_mod_form extends moodleform_mod {
     /**
-     * Definition.
+     * Form definition.
      */
-    function definition() {
+    public function definition() {
         global $DB, $PAGE;
 
         $PAGE->force_settings_menu();
@@ -49,7 +57,6 @@ class mod_loop_mod_form extends moodleform_mod {
         $this->standard_intro_elements(get_string('loopinstance_introduction', 'loop'));
 
         $loops = [
-            /* 'none' => '---' */
         ];
         $loopsystems = $DB->get_records('loop_systems');
         $firsturl = '';
@@ -72,7 +79,7 @@ class mod_loop_mod_form extends moodleform_mod {
             $chapterurl = $firsturl;
         }
 
-        // Add error handling for API calls
+        // Add error handling for API calls.
         if ($chapterurl) {
             $structurejson = get_loop_structure($chapterurl);
             if ($structurejson !== false) {
@@ -86,7 +93,6 @@ class mod_loop_mod_form extends moodleform_mod {
         }
 
         $chapterselect = $mform->addElement('select', 'chapter', get_string('loopinstance_chapter', 'loop'), $chapters);
-        // $chapterselect->setSelected($loop_system->chapter);
         if (isset($this->current->chapter)) {
             $chapterselect->setSelected($this->current->chapter);
         }
@@ -102,7 +108,7 @@ class mod_loop_mod_form extends moodleform_mod {
             $themeurl = $firsturl;
         }
 
-        // Add error handling for themes API call
+        // Add error handling for themes API call.
         if ($themeurl) {
             $themesjson = get_loop_themes($themeurl);
             if ($themesjson !== false) {
@@ -116,7 +122,6 @@ class mod_loop_mod_form extends moodleform_mod {
         }
 
         $themeselect = $mform->addElement('select', 'theme', get_string('loopinstance_theme', 'loop'), $themes);
-        // $themeselect->setSelected($loop_system->theme);
         if (isset($this->current->theme)) {
             $themeselect->setSelected($this->current->theme);
         }
@@ -132,7 +137,7 @@ class mod_loop_mod_form extends moodleform_mod {
      *
      * @return bool|stdClass
      */
-    function get_data() {
+    public function get_data() {
 
         $data = parent::get_data();
 

@@ -60,6 +60,22 @@ $sidencryptedencoded = urlencode($sidencrypted);
 
 $moodleurl = str_replace('https://', '', $CFG->wwwroot);
 
-$output = '<html><head><meta http-equiv="refresh" content="0; URL=' . $wikiroot . 'index.php/' . urldecode($page) . '?auth=moodle&moodle=' . $moodleurl . '&loop=' . $loop . '&skin=' . $skin . '&u=' . $username . '&t=' . $token . '&p=' . $page . '&sid=' . $sidencryptedencoded . '"></head></html>';
+$url = $wikiroot . 'index.php/' . urldecode($page) .
+    '?auth=moodle' .
+    '&moodle=' . $moodleurl .
+    '&loop=' . $loop .
+    '&skin=' . $skin .
+    '&u=' . $username .
+    '&t=' . $token .
+    '&p=' . $page .
+    '&sid=' . $sidencryptedencoded;
+
+$output = <<<HTML
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; URL={$url}">
+</head>
+</html>
+HTML;
 
 echo $output;
