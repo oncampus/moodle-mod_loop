@@ -25,8 +25,6 @@
 
 require_once('../../config.php');
 
-require_login();
-
 global $DB;
 
 $sid = required_param('sid', PARAM_ALPHANUM);
