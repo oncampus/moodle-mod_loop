@@ -42,7 +42,7 @@ class mod_loop_mod_form extends moodleform_mod {
      * Form definition.
      */
     public function definition() {
-        global $DB, $PAGE;
+        global $DB, $PAGE, $COURSE;
 
         $PAGE->force_settings_menu();
 
@@ -58,16 +58,19 @@ class mod_loop_mod_form extends moodleform_mod {
 
         $loops = [
         ];
-        $loopsystems = $DB->get_records('loop_systems');
+        $courseid = $PAGE->course->idnumber;
+        $loopsystems = get_allowed_loops($courseid);
         $firsturl = '';
         if ($loopsystems) {
             foreach ($loopsystems as $loopsystem) {
+                $loopsystemurl = $loopsystem['url'];
                 if ($firsturl == '') {
-                    $firsturl = $loopsystem->url;
+                    $firsturl = $loopsystemurl;
                 }
-                $loops[$loopsystem->url] = $loopsystem->name . ' (' . $loopsystem->url . ')';
+                $loops[$loopsystemurl] = $loopsystem['name']. ' (' . $loopsystemurl .')';
             }
         }
+
         $mform->addElement('select', 'url', get_string('loopinstance_url', 'loop'), $loops);
         $mform->addRule('url', null, 'required', null, 'client');
 

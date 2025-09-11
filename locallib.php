@@ -28,101 +28,27 @@
  *
  * @return bool
  */
-function get_allowed_loops() {
-    global $DB;
-
-    mtrace('Getting list of allowed LOOPs from Moodalis');
-
+function get_allowed_loops($courseid) {
     $token = get_config('mod_loop', 'token');
+    $url = 'https://moodalis.oncampus.de/files/course_loops.php?courseid=' . $courseid . '&token=' . $token;
+    $url = str_replace(' ', '%20', $url);
 
     $cha = curl_init();
-    curl_setopt($cha, CURLOPT_URL, ('https://moodalis.oncampus.de/files/lms_loops.php?token=' . $token));
+    curl_setopt($cha, CURLOPT_URL, $url);
     curl_setopt($cha, CURLOPT_ENCODING, "UTF-8");
     curl_setopt($cha, CURLOPT_RETURNTRANSFER, true);
-    $jsonresult = curl_exec($cha);
+    $json_result = curl_exec($cha);
 
-    if (!$jsonresult) {
+    if (!$json_result) {
         throw new Exception("Error getting data from server: " . curl_error($cha));
     }
 
-    $loops = json_decode($jsonresult, true);
-
+    $loops = json_decode($json_result,true);
     curl_close($cha);
 
-    $processedloops = [];
-
-    if ($loops) {
-        foreach ($loops as $loop => $loopdata) {
-            mtrace("Checking LOOP " . $loop);
-            unset($loopsystem);
-
-            if ($DB->record_exists('loop_systems', ['externalid' => $loop])) {
-                mtrace("LOOP already exisits");
-
-                $loopsystem = $DB->get_record('loop_systems', ['externalid' => $loop]);
-                $processedloops[] = $loopsystem->id;
-
-                if (
-                    ($loopsystem->name != $loopdata['name']) ||
-                    ($loopsystem->url != $loopdata['url']) ||
-                    ($loopsystem->personalized_access != $loopdata['personalized_access']) ||
-                    ($loopsystem->student_role_allocation != $loopdata['student_role_allocation']) ||
-                    ($loopsystem->teacher_role_allocation != $loopdata['teacher_role_allocation']) ||
-                    ($loopsystem->allowed_themes != json_encode($loopdata['allowed_themes']))
-                ) {
-                    $updateloopsystem = new stdClass();
-                    $updateloopsystem->id = $loopsystem->id;
-                    $updateloopsystem->externalid = $loop;
-                    $updateloopsystem->name = $loopdata['name'];
-                    $updateloopsystem->url = $loopdata['url'];
-                    $updateloopsystem->personalized_access = $loopdata['personalized_access'];
-                    $updateloopsystem->student_role_allocation = $loopdata['student_role_allocation'];
-                    $updateloopsystem->teacher_role_allocation = $loopdata['teacher_role_allocation'];
-                    $updateloopsystem->allowed_themes = json_encode($loopdata['allowed_themes']);
-                    $updateloopsystem->timemodified = time();
-                    $DB->update_record('loop_systems', $updateloopsystem);
-
-                    mtrace("LOOP updated");
-                } else {
-                    mtrace("no update neccessary");
-                }
-            } else {
-                mtrace("New LOOP");
-
-                $newloopsystem = new stdClass();
-                $newloopsystem->externalid = $loop;
-                $newloopsystem->name = $loopdata['name'];
-                $newloopsystem->url = $loopdata['url'];
-                $newloopsystem->personalized_access = $loopdata['personalized_access'];
-                $newloopsystem->student_role_allocation = $loopdata['student_role_allocation'];
-                $newloopsystem->teacher_role_allocation = $loopdata['teacher_role_allocation'];
-                $newloopsystem->allowed_themes = json_encode($loopdata['allowed_themes']);
-                $newloopsystem->timemodified = time();
-                $newloopsystem->timecreated = time();
-                $newid = $DB->insert_record('loop_systems', $newloopsystem, true);
-                $processedloops[] = $newid;
-                mtrace("inserted into Database: " . $newid);
-            }
-        }
-
-        if (!empty($processedloops)) {
-            $placeholders = str_repeat('?,', count($processedloops) - 1) . '?';
-            $sql = "SELECT * FROM {loop_systems} WHERE id NOT IN ($placeholders)";
-            $todelete = $DB->get_records_sql($sql, $processedloops);
-        } else {
-            $todelete = [];
-        }
-
-        if (is_array($todelete)) {
-            foreach ($todelete as $delloop) {
-                mtrace("delete LOOP with id: " . $delloop->id);
-                $DB->delete_records('loop_systems', ['id' => $delloop->id]);
-            }
-        }
-    }
-
-    return true;
+    return $loops;
 }
+
 
 /**
  * Get loop structure.
@@ -131,11 +57,7 @@ function get_allowed_loops() {
  * @return bool|string
  */
 function get_loop_structure($url) {
-    global $CFG, $DB;
-
-    if (!$loop = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '" . $url . "'")) {
-        return false;
-    }
+    global $CFG;
 
     $wgemoodlelooptoken = get_config('mod_loop', 'token');
 
