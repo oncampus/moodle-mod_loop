@@ -44,7 +44,7 @@ if (empty($wgemoodlelooptoken)) {
 $token = md5($username . $wgemoodlelooptoken);
 
 try {
-    $sid = core\session\manager::get_sessions_by_userid($USER->id)[0];
+    $sid = core\session\manager::get_sessions_by_userid($USER->id)[0]->sid;
     if (!$sid) {
         throw new moodle_exception('error:nosession', 'mod_loop', '', null, 'No valid session found for user');
     }
