@@ -33,7 +33,7 @@ $username = required_param('username', PARAM_USERNAME);
 
 
 try {
-    $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid], MUST_EXIST);
+    $userid = core\session\manager::get_session_by_sid($sid)->userid;
 } catch (Exception $e) {
     die();
 }
