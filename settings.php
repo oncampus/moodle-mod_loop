@@ -41,4 +41,11 @@ if ($ADMIN->fulltree) {
         '',
         PARAM_TEXT
     ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'mod_loop/moodalis_loops',
+        'Moodalis LOOPs',
+        'Is access to LOOPS managed by moodalis on course level',
+        0,
+    ));
 }

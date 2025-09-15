@@ -26,9 +26,23 @@
 /**
  * Get allowed loops.
  *
- * @return bool
+ * @return array
  */
 function get_allowed_loops($courseid) {
+    if (get_config('mod_loop', 'moodalis_loops')) {
+        return get_allowed_loops_course($courseid);
+    }
+    return get_allowed_loops_system();
+
+}
+
+/**
+ * Returns all loops that are allowed for this course.
+ * @param $courseid
+ * @return mixed
+ * @throws dml_exception
+ */
+function get_allowed_loops_course($courseid) {
     $token = get_config('mod_loop', 'token');
     $url = 'https://moodalis.oncampus.de/files/course_loops.php?courseid=' . $courseid . '&token=' . $token;
     $url = str_replace(' ', '%20', $url);
@@ -37,16 +51,26 @@ function get_allowed_loops($courseid) {
     curl_setopt($cha, CURLOPT_URL, $url);
     curl_setopt($cha, CURLOPT_ENCODING, "UTF-8");
     curl_setopt($cha, CURLOPT_RETURNTRANSFER, true);
-    $json_result = curl_exec($cha);
+    $jsonresult = curl_exec($cha);
 
-    if (!$json_result) {
+    if (!$jsonresult) {
         throw new Exception("Error getting data from server: " . curl_error($cha));
     }
 
-    $loops = json_decode($json_result,true);
+    $loops = json_decode($jsonresult,true);
     curl_close($cha);
 
     return $loops;
+}
+
+/**
+ * Returns all Loops that are allowed for this moodle
+ * @return array
+ * @throws dml_exception
+ */
+function get_allowed_loops_system() {
+    global $DB;
+    return $DB->get_records('loop_systems');
 }
 
 

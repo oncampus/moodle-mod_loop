@@ -25,8 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2025091100;
+$plugin->version = 2025091500;
 $plugin->requires = 2022112800;
 $plugin->component = 'mod_loop';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0 (Moodle 4.5 compatible)';
+$plugin->release = '1.1 (Moodle 4.5 compatible)';
