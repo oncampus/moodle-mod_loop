@@ -57,7 +57,7 @@ function get_allowed_loops_course($courseid) {
         throw new Exception("Error getting data from server: " . curl_error($cha));
     }
 
-    $loops = json_decode($jsonresult,true);
+    $loops = json_decode($jsonresult);
     curl_close($cha);
 
     return $loops;
