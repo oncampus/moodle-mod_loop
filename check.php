@@ -34,6 +34,10 @@ $username = required_param('username', PARAM_USERNAME);
 
 try {
     $userid = core\session\manager::get_session_by_sid($sid)->userid;
+    if (!$userid) {
+        // Sessionmanager didn't find anything, try manual db check.
+        $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid], MUST_EXIST);
+    }
 } catch (Exception $e) {
     die();
 }

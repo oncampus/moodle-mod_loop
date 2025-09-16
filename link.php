@@ -25,7 +25,7 @@
 
 require_once("../../config.php");
 
-global $CFG, $USER;
+global $CFG, $USER, $DB;
 require_login();
 
 $loop = required_param('loop', PARAM_HOST);
@@ -45,6 +45,10 @@ $token = md5($username . $wgemoodlelooptoken);
 
 try {
     $sid = core\session\manager::get_sessions_by_userid($USER->id)[0]->sid;
+    if (!$sid) {
+        // Sessionmanager didn't find session, check DB for current session.
+        $sid = $DB->get_field('sessions', 'sid', ['userid' => $USER->id], IGNORE_MULTIPLE);
+    }
     if (!$sid) {
         throw new moodle_exception('error:nosession', 'mod_loop', '', null, 'No valid session found for user');
     }
