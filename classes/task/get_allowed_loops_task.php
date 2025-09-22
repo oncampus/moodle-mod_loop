@@ -56,6 +56,17 @@ class get_allowed_loops_task extends \core\task\scheduled_task {
         }
     }
 
+    /**
+     * Retrieves and processes the list of allowed LOOPs from an external server, updating or inserting
+     * records in the database accordingly. Deletes outdated LOOP entries from the database.
+     *
+     * Uses a token to fetch data from a remote URL, processes the data to ensure it matches the
+     * local database, and updates or inserts records as needed. Additionally, it identifies obsolete
+     * entries in the database and removes them.
+     *
+     * @return bool Returns true after successfully processing the allowed LOOPs.
+     * @throws \dml_exception
+     */
     private function get_allowed_loops() {
         global $DB;
 
@@ -148,6 +159,5 @@ class get_allowed_loops_task extends \core\task\scheduled_task {
         }
 
         return true;
-
     }
 }

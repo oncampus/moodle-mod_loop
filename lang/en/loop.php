@@ -24,6 +24,7 @@
  */
 
 $string['get_allowed_loops_task'] = 'Get allowed Loops';
+$string['loop_placeholder'] = 'Choose a LOOP';
 $string['loopinstance_chapter'] = 'Chapter';
 $string['loopinstance_introduction'] = 'Intro';
 $string['loopinstance_name'] = 'Name';
@@ -33,5 +34,6 @@ $string['loopinstance_url'] = 'LOOP';
 $string['modulename'] = 'LOOP';
 $string['modulename_help'] = 'Insert Link to LOOP';
 $string['modulename_link'] = 'mod/loop/view';
-$string['modulenameplural'] = 'Loops';
+$string['modulenameplural'] = 'LOOPS';
+$string['noselection'] = 'No LOOP selected';
 $string['pluginname'] = 'LOOP';
