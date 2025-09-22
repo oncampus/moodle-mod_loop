@@ -69,7 +69,12 @@ class mod_loop_mod_form extends moodleform_mod {
             $loops[$loopsystemurl] = $loopsystem->name . ' (' . $loopsystemurl . ')';
         }
 
-        $mform->addElement('select', 'url', get_string('loopinstance_url', 'loop'), $loops);
+        $options = [
+            'multiple' => false,
+            'noselectionstring' => get_string('noselection', 'loop'),
+            'placeholder' => get_string('loop_placeholder', 'loop'),
+        ];
+        $mform->addElement('autocomplete', 'url', get_string('loopinstance_url', 'loop'), $loops, $options);
         $mform->addRule('url', null, 'required', null, 'client');
 
         $chapters = [];

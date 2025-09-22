@@ -33,7 +33,6 @@ function get_allowed_loops($courseid) {
         return get_allowed_loops_course($courseid);
     }
     return get_allowed_loops_system();
-
 }
 
 /**

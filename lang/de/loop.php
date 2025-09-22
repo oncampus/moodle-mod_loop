@@ -24,13 +24,16 @@
  */
 
 $string['get_allowed_loops_task'] = 'Synchronisieren der erlaubten LOOPs';
+$string['loop_placeholder'] = 'Wählen Sie ein LOOP';
 $string['loopinstance_chapter'] = 'Kapitel';
 $string['loopinstance_introduction'] = 'Intro';
 $string['loopinstance_name'] = 'Name';
 $string['loopinstance_page'] = 'Seite';
+$string['loopinstance_theme'] = 'Theme';
 $string['loopinstance_url'] = 'LOOP';
 $string['modulename'] = 'LOOP';
 $string['modulename_help'] = 'Link zu einem LOOP';
 $string['modulename_link'] = 'mod/loop/view';
-$string['modulenameplural'] = 'Loops';
+$string['modulenameplural'] = 'LOOPS';
+$string['noselection'] = 'Kein LOOP ausgewählt';
 $string['pluginname'] = 'LOOP';
