@@ -25,6 +25,7 @@
 
 $string['get_allowed_loops_task'] = 'Get allowed Loops';
 $string['loop:addinstance'] = 'Eine Loop-Instanz hinzufügen.';
+$string['loop:view'] = 'View LOOP';
 $string['loop_placeholder'] = 'Choose a LOOP';
 $string['loopinstance_chapter'] = 'Chapter';
 $string['loopinstance_introduction'] = 'Intro';

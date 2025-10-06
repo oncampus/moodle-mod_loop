@@ -25,6 +25,7 @@
 
 $string['get_allowed_loops_task'] = 'Synchronisieren der erlaubten LOOPs';
 $string['loop:addinstance'] = 'Add a loop instance.';
+$string['loop:view'] = 'LOOP anzeigen';
 $string['loop_placeholder'] = 'Wählen Sie ein LOOP';
 $string['loopinstance_chapter'] = 'Kapitel';
 $string['loopinstance_introduction'] = 'Intro';
