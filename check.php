@@ -39,17 +39,17 @@ try {
         $userid = $DB->get_field('sessions', 'userid', ['sid' => $sid], MUST_EXIST);
     }
 } catch (Exception $e) {
+    echo 'error: no associated session found with transmitted sid';
     die();
 }
 
 try {
     $sessionusername = $DB->get_field('user', 'username', ['id' => $userid], MUST_EXIST);
 } catch (Exception $e) {
+    echo 'error: no associated moodle user found with transmitted username';
     die();
 }
 
 if ($username == $sessionusername) {
     echo 1;
-} else {
-    die();
 }
