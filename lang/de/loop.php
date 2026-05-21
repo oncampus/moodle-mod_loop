@@ -23,6 +23,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['event:loop_viewed'] = 'Der Nutzende mit der ID "{$a->userid}" sah die Loop-Aktivität mit der Kursmodul ID "{$a->contextinstanceid}" ein. (URL: {$a->link}).';
 $string['get_allowed_loops_task'] = 'Synchronisieren der erlaubten LOOPs';
 $string['loop:addinstance'] = 'Add a loop instance.';
 $string['loop:view'] = 'LOOP anzeigen';

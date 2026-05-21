@@ -56,10 +56,10 @@ function loop_supports(string $feature): ?bool {
  * Add a new loop instance.
  *
  * @param object $data The form data
- * @param object $mform The form object
+ * @param ?object $mform The form object, null when called from tests or CLI
  * @return int The ID of the new instance
  */
-function loop_add_instance(object $data, object $mform): int {
+function loop_add_instance(object $data, ?object $mform): int {
     global $DB;
 
     $data->timemodified = time();

@@ -23,7 +23,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_loop\event\course_module_viewed;
+
 require_once('../../config.php');
+
+global $DB, $PAGE;
 
 $id = optional_param('id', 0, PARAM_INT);    // Course Module ID.
 $l = optional_param('l', 0, PARAM_INT);     // Loop ID.
@@ -67,5 +71,15 @@ if (!empty($loop->page)) {
 
 $loopurl = str_replace('https://', '', $loop->url);
 $linkurl = new moodle_url('/mod/loop/link.php', ['loop' => $loop->url, 'page' => $page, 'skin' => $loop->theme]);
+$eventurl = new moodle_url($loop->url, ['page' => $page, 'skin' => $loop->theme]);
+
+$context = context_module::instance($cm->id);
+
+$event = course_module_viewed::create([
+    'context'  => $context,
+    'objectid' => $loop->id,
+    'other'    => ['link' => $eventurl->out(false)],
+]);
+$event->trigger();
 
 redirect($linkurl);
