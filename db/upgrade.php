@@ -63,5 +63,16 @@ function xmldb_loop_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2025082500, 'loop');
     }
 
+    if ($oldversion < 2025091906) {
+        $table = new xmldb_table('loop_systems');
+        $field = new xmldb_field('url', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL);
+
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_type($table, $field);
+        }
+
+        upgrade_mod_savepoint(true, 2025091906, 'loop');
+    }
+
     return true;
 }

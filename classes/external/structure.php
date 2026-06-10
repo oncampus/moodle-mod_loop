@@ -25,11 +25,17 @@
 
 namespace mod_loop\external;
 
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/mod/loop/locallib.php');
+
 use core_external\external_api;
 use core_external\external_function_parameters;
 use core_external\external_value;
 use core_external\external_single_structure;
 use core_external\external_warnings;
+use dml_exception;
+use invalid_parameter_exception;
 
 /**
  * External API for Loop structure operations
@@ -45,7 +51,7 @@ class structure extends external_api {
      *
      * @return external_function_parameters
      */
-    public static function get_structure_parameters(): external_function_parameters {
+    public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters([
             'url' => new external_value(PARAM_TEXT, 'Loop system URL', VALUE_REQUIRED),
         ]);
@@ -56,19 +62,20 @@ class structure extends external_api {
      *
      * @param string $url The loop system URL
      * @return array The loop structure data
-     * @throws \invalid_parameter_exception
+     * @throws invalid_parameter_exception|dml_exception
      */
-    public static function get_structure(string $url): array {
+    public static function execute(string $url): array {
         global $DB;
 
-        $params = self::validate_parameters(self::get_structure_parameters(), [
+        $params = self::validate_parameters(self::execute_parameters(), [
             'url' => $url,
         ]);
 
         $url = $params['url'];
 
         // Validate that the loop system exists.
-        if (!$DB->record_exists('loop_systems', ['url' => $url])) {
+        $courseloops = get_config('mod_loop', 'course_loops');
+        if (!$courseloops && !$DB->record_exists('loop_systems', ['url' => $url])) {
             return [
                 'structure' => null,
                 'warnings' => [
@@ -110,7 +117,7 @@ class structure extends external_api {
      *
      * @return external_single_structure
      */
-    public static function get_structure_returns(): external_single_structure {
+    public static function execute_returns(): external_single_structure {
         return new external_single_structure([
             'structure' => new external_value(PARAM_RAW, 'Loop structure as JSON string', VALUE_OPTIONAL),
             'warnings' => new external_warnings(),

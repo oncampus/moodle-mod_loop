@@ -25,6 +25,9 @@
 
 namespace mod_loop\external;
 
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/mod/loop/locallib.php');
 
 use core_external\external_api;
 use core_external\external_function_parameters;
@@ -45,7 +48,7 @@ class themes extends external_api {
      *
      * @return external_function_parameters
      */
-    public static function get_themes_parameters(): external_function_parameters {
+    public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters([
             'url' => new external_value(PARAM_TEXT, 'Loop system URL', VALUE_REQUIRED),
         ]);
@@ -58,10 +61,10 @@ class themes extends external_api {
      * @return array The loop themes data
      * @throws \invalid_parameter_exception
      */
-    public static function get_themes(string $url): array {
+    public static function execute(string $url): array {
         global $DB;
 
-        $params = self::validate_parameters(self::get_themes_parameters(), [
+        $params = self::validate_parameters(self::execute_parameters(), [
             'url' => $url,
         ]);
 
@@ -110,7 +113,7 @@ class themes extends external_api {
      *
      * @return external_single_structure
      */
-    public static function get_themes_returns(): external_single_structure {
+    public static function execute_returns(): external_single_structure {
         return new external_single_structure([
             'themes' => new external_value(PARAM_RAW, 'Loop themes as JSON string', VALUE_OPTIONAL),
             'warnings' => new external_warnings(),

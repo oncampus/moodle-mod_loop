@@ -29,7 +29,7 @@
  * @return array
  */
 function get_allowed_loops($courseid) {
-    if (get_config('mod_loop', 'moodalis_loops')) {
+    if (get_config('mod_loop', 'course_loops')) {
         return get_allowed_loops_course($courseid);
     }
     return get_allowed_loops_system();

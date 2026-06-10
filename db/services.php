@@ -27,16 +27,16 @@ defined('MOODLE_INTERNAL') || die();
 
 $functions = [
     'mod_loop_get_structure' => [
-        'classname'   => 'mod_loop\external\structure',
-        'methodname'  => 'get_structure',
+        'classname' => 'mod_loop\external\structure',
+        'methodname' => 'execute',
         'description' => 'Get loop structure for a given URL',
         'type' => 'read',
         'ajax' => true,
         'loginrequired' => false,
     ],
     'mod_loop_get_themes' => [
-        'classname'   => 'mod_loop\external\themes',
-        'methodname'  => 'get_themes',
+        'classname' => 'mod_loop\external\themes',
+        'methodname' => 'execute',
         'description' => 'Get allowed loop themes for a given URL',
         'type' => 'read',
         'ajax' => true,

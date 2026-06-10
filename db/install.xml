@@ -30,7 +30,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="externalid" TYPE="char" LENGTH="32" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="url" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="url" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="personalized_access" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="1 = personalized access allowed, 0 = only shared/anonymous access allowed"/>
         <FIELD NAME="student_role_allocation" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="student_no_edit" SEQUENCE="false"/>
         <FIELD NAME="teacher_role_allocation" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="teacher_no_edit" SEQUENCE="false"/>

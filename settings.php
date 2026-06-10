@@ -28,24 +28,24 @@ defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configpasswordunmask(
         'mod_loop/token',
-        'Loop Token',
-        'This is the token to get the allowed LOOPs and get the structe for a LOOP',
+        get_string('settings:loop_token', 'mod_loop'),
+        get_string('settings:loop_token_desc', 'mod_loop'),
         '',
         PARAM_TEXT
     ));
 
     $settings->add(new admin_setting_configtext(
         'mod_loop/default_theme',
-        'Default Theme',
-        'Default Theme for LOOPs',
+        get_string('settings:default_theme', 'mod_loop'),
+        get_string('settings:default_theme_desc', 'mod_loop'),
         '',
         PARAM_TEXT
     ));
 
     $settings->add(new admin_setting_configcheckbox(
-        'mod_loop/moodalis_loops',
-        'Moodalis LOOPs',
-        'Is access to LOOPS managed by moodalis on course level',
+        'mod_loop/course_loops',
+        get_string('settings:course_loops', 'mod_loop'),
+        get_string('settings:course_loops_desc', 'mod_loop'),
         0,
     ));
 }
