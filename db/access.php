@@ -17,10 +17,10 @@
 /**
  * Capability definitions for the loop module.
  *
- * @package mod_loop
- * @copyright 2025 oncampus GmbH
- * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_loop
+ * @copyright   2025 oncampus GmbH
+ * @author      Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

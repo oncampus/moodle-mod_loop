@@ -18,8 +18,7 @@
  * Main file to view greetings
  *
  * @package     mod_loop
- * @copyright   2025 oncampus GmbH
- * @author      Alexander Mueller <alexander.mueller@oncampus.de>
+ * @copyright   2025 oncampus GmbH <support@oncampus.de
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,11 +26,11 @@
  * Define upgrade steps to be performed to upgrade the plugin from the old version to the current one.
  *
  * @param int $oldversion Version number the plugin is being upgraded from.
- * @return true
+ * @return bool
  * @throws ddl_exception
  * @throws moodle_exception
  */
-function xmldb_loop_upgrade($oldversion) {
+function xmldb_loop_upgrade(int $oldversion): bool {
     global $DB;
     $dbman = $DB->get_manager();
 

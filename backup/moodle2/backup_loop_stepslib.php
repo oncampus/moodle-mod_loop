@@ -15,25 +15,21 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Define all the backup steps that will be used by the backup_loop_activity_task
- *
- * @package   mod_loop
- * @copyright 2025 oncampus GmbH
- * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
  * Define the complete loop structure for backup, with file and id annotations
- * @package mod_loop
+ * @package     mod_loop
+ * @copyright   2025 oncampus GmbH
+ * @author      Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_loop_activity_structure_step extends backup_activity_structure_step {
     /**
      * Define the structure of the backup.
      *
      * @return backup_nested_element
+     * @throws base_step_exception
+     * @throws base_element_struct_exception
      */
-    protected function define_structure() {
+    protected function define_structure(): backup_nested_element {
 
         // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');

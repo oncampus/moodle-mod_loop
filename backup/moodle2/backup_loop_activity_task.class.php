@@ -42,8 +42,9 @@ class backup_loop_activity_task extends backup_activity_task {
 
     /**
      * Define (add) particular steps this activity can have.
+     * @throws base_task_exception
      */
-    protected function define_my_steps() {
+    protected function define_my_steps(): void {
         // Loop only has one structure step.
         $this->add_step(new backup_loop_activity_structure_step('loop_structure', 'loop.xml'));
     }
@@ -51,7 +52,7 @@ class backup_loop_activity_task extends backup_activity_task {
     /**
      * Code the transformations to perform in the activity in order to get transportable (encoded) links.
      */
-    public static function encode_content_links($content) {
+    public static function encode_content_links($content): array|string|null {
         global $CFG;
 
         $base = preg_quote($CFG->wwwroot, "/");
@@ -62,8 +63,6 @@ class backup_loop_activity_task extends backup_activity_task {
 
         // Link to loop view by moduleid.
         $search = "/(" . $base . "\/mod\/loop\/view.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@LOOPVIEWBYID*$2@$', $content);
-
-        return $content;
+        return preg_replace($search, '$@LOOPVIEWBYID*$2@$', $content);
     }
 }

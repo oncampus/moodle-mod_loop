@@ -17,29 +17,39 @@
 /**
  * Strings for component 'loop', language 'en'.
  *
- * @package   mod_loop
- * @copyright 2025 oncampus GmbH
- * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_loop
+ * @copyright   2025 oncampus GmbH
+ * @author      Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['event:loop_viewed'] = 'The user with id "{$a->userid}" viewed the LOOP activity with course module id "{$a->contextinstanceid}" (URL: {$a->link}).';
+
 $string['get_allowed_loops_task'] = 'Get allowed Loops';
+
 $string['loop:addinstance'] = 'Eine Loop-Instanz hinzufügen.';
 $string['loop:view'] = 'View LOOP';
+
 $string['loop_placeholder'] = 'Choose a LOOP';
+
 $string['loopinstance_chapter'] = 'Chapter';
 $string['loopinstance_introduction'] = 'Intro';
 $string['loopinstance_name'] = 'Name';
 $string['loopinstance_page'] = 'Page';
 $string['loopinstance_theme'] = 'Theme';
 $string['loopinstance_url'] = 'LOOP';
+
 $string['modulename'] = 'LOOP';
 $string['modulename_help'] = 'Insert Link to LOOP';
 $string['modulename_link'] = 'mod/loop/view';
+
 $string['modulenameplural'] = 'LOOPS';
 $string['noselection'] = 'No LOOP selected';
+
 $string['pluginname'] = 'LOOP';
+
+$string['privacy:metadata'] = 'The LOOP plugin does not store any personal data.';
+
 $string['settings:course_loops'] = 'Course LOOPs';
 $string['settings:course_loops_desc'] = 'Access to LOOPs is based on course instead of system';
 $string['settings:default_theme'] = 'Default theme';

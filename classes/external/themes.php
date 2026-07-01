@@ -34,6 +34,8 @@ use core_external\external_function_parameters;
 use core_external\external_value;
 use core_external\external_single_structure;
 use core_external\external_warnings;
+use dml_exception;
+use invalid_parameter_exception;
 
 /**
  * External API for Loop themes operations
@@ -59,7 +61,7 @@ class themes extends external_api {
      *
      * @param string $url The loop system URL
      * @return array The loop themes data
-     * @throws \invalid_parameter_exception
+     * @throws invalid_parameter_exception|dml_exception
      */
     public static function execute(string $url): array {
         global $DB;

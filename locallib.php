@@ -26,9 +26,11 @@
 /**
  * Get allowed loops.
  *
+ * @param int|string $courseid
  * @return array
+ * @throws dml_exception
  */
-function get_allowed_loops($courseid) {
+function get_allowed_loops(int|string $courseid): array {
     if (get_config('mod_loop', 'course_loops')) {
         return get_allowed_loops_course($courseid);
     }
@@ -37,11 +39,12 @@ function get_allowed_loops($courseid) {
 
 /**
  * Returns all loops that are allowed for this course.
- * @param $courseid
- * @return mixed
+ * @param int|string $courseid
+ * @return array
  * @throws dml_exception
+ * @throws Exception
  */
-function get_allowed_loops_course($courseid) {
+function get_allowed_loops_course(int|string $courseid): array {
     $token = get_config('mod_loop', 'token');
     $url = 'https://moodalis.oncampus.de/files/course_loops.php?courseid=' . $courseid . '&token=' . $token;
     $url = str_replace(' ', '%20', $url);
@@ -59,7 +62,11 @@ function get_allowed_loops_course($courseid) {
     $loops = json_decode($jsonresult);
     curl_close($cha);
 
-    return $loops;
+    if ($loops instanceof stdClass) {
+        return array_values((array) $loops);
+    }
+
+    return is_array($loops) ? $loops : [];
 }
 
 /**
@@ -67,7 +74,7 @@ function get_allowed_loops_course($courseid) {
  * @return array
  * @throws dml_exception
  */
-function get_allowed_loops_system() {
+function get_allowed_loops_system(): array {
     global $DB;
     return $DB->get_records('loop_systems');
 }
@@ -78,8 +85,9 @@ function get_allowed_loops_system() {
  *
  * @param string $url
  * @return bool|string
+ * @throws dml_exception
  */
-function get_loop_structure($url) {
+function get_loop_structure(string $url): bool|string {
     global $CFG;
 
     $wgemoodlelooptoken = get_config('mod_loop', 'token');
@@ -141,9 +149,10 @@ function get_loop_structure($url) {
  *
  * @param string $url
  * @return bool|string
+ * @throws dml_exception
  */
-function get_loop_themes($url) {
-    global $CFG, $DB;
+function get_loop_themes(string $url): bool|string {
+    global $DB;
 
     if (!$loop = $DB->get_record_sql("select * from {loop_systems} where " . $DB->sql_compare_text('url') . " = '" . $url . "'")) {
         return false;

@@ -17,24 +17,29 @@
 /**
  * Scheduled task to get allowed loops from external systems
  *
- * @package   mod_loop
- * @copyright 2025 oncampus GmbH
- * @author  Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_loop
+ * @copyright   2025 oncampus GmbH
+ * @author      Marc Vorreiter <marc.vorreiter@oncampus.de>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace mod_loop\task;
 
+use coding_exception;
+use core\task\scheduled_task;
+use dml_exception;
+use Exception;
 use stdClass;
 
 /**
  * Scheduled task to get allowed loops from external systems.
  */
-class get_allowed_loops_task extends \core\task\scheduled_task {
+class get_allowed_loops_task extends scheduled_task {
     /**
      * Get a descriptive name for this task (shown to admins).
      *
      * @return string
+     * @throws coding_exception
      */
     public function get_name(): string {
         return get_string('get_allowed_loops_task', 'mod_loop');
@@ -44,12 +49,12 @@ class get_allowed_loops_task extends \core\task\scheduled_task {
      * Do the job.
      * Throw exceptions on errors (the job will be retried).
      *
-     * @throws \Exception When the task fails
+     * @throws Exception When the task fails
      */
     public function execute(): void {
         try {
             $this->get_allowed_loops();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log the error and re-throw for retry mechanism.
             debugging('Loop task failed: ' . $e->getMessage(), DEBUG_DEVELOPER);
             throw $e;
@@ -65,9 +70,10 @@ class get_allowed_loops_task extends \core\task\scheduled_task {
      * entries in the database and removes them.
      *
      * @return bool Returns true after successfully processing the allowed LOOPs.
-     * @throws \dml_exception
+     * @throws dml_exception
+     * @throws Exception
      */
-    private function get_allowed_loops() {
+    private function get_allowed_loops(): bool {
         global $DB;
 
         mtrace('Getting list of allowed LOOPs from Moodalis');

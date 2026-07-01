@@ -14,15 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-/**
- * Add loop form.
- *
- * @package   mod_loop
- * @copyright 2025 oncampus GmbH
- * @author    Marc Vorreiter <marc.vorreiter@oncampus.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot . '/course/moodleform_mod.php');
@@ -40,9 +31,10 @@ require_once($CFG->dirroot . '/mod/loop/locallib.php');
 class mod_loop_mod_form extends moodleform_mod {
     /**
      * Form definition.
+     * @throws dml_exception
      */
-    public function definition() {
-        global $DB, $PAGE, $COURSE;
+    public function definition(): void {
+        global $PAGE;
 
         $PAGE->force_settings_menu();
 
@@ -143,7 +135,7 @@ class mod_loop_mod_form extends moodleform_mod {
      *
      * @return bool|stdClass
      */
-    public function get_data() {
+    public function get_data(): bool|stdClass {
 
         $data = parent::get_data();
 
@@ -171,8 +163,9 @@ class mod_loop_mod_form extends moodleform_mod {
      * @param array $data
      * @param array $files
      * @return array
+     * @throws coding_exception
      */
-    public function validation($data, $files) {
+    public function validation($data, $files): array {
         $errors = parent::validation($data, $files);
 
         // Validate URL selection.

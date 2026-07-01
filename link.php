@@ -23,6 +23,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\session\manager;
+
 require_once("../../config.php");
 
 global $CFG, $USER, $DB;
@@ -44,7 +46,7 @@ if (empty($wgemoodlelooptoken)) {
 $token = md5($username . $wgemoodlelooptoken);
 
 try {
-    $sid = core\session\manager::get_sessions_by_userid($USER->id)[0]->sid;
+    $sid = manager::get_sessions_by_userid($USER->id)[0]->sid;
     if (!$sid) {
         // Sessionmanager didn't find session, check DB for current session.
         $sid = $DB->get_field('sessions', 'sid', ['userid' => $USER->id], IGNORE_MULTIPLE);
@@ -75,11 +77,11 @@ $url = $wikiroot . 'index.php/' . urldecode($page) .
     '&sid=' . $sidencryptedencoded;
 
 $output = <<<HTML
-<html>
-<head>
-    <meta http-equiv="refresh" content="0; URL={$url}">
-</head>
-</html>
+    <html>
+        <head>
+            <meta http-equiv="refresh" content="0; URL={$url}">
+        </head>
+    </html>
 HTML;
 
 echo $output;

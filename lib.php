@@ -34,22 +34,11 @@ global $CFG;
  * @return bool|null
  */
 function loop_supports(string $feature): ?bool {
-    switch ($feature) {
-        case FEATURE_MOD_INTRO:
-            return true;
-        case FEATURE_COMPLETION_TRACKS_VIEWS:
-            return false;
-        case FEATURE_COMPLETION_HAS_RULES:
-            return false;
-        case FEATURE_GRADE_HAS_GRADE:
-            return false;
-        case FEATURE_BACKUP_MOODLE2:
-            return true;
-        case FEATURE_NO_VIEW_LINK:
-            return false;
-        default:
-            return null;
-    }
+    return match ($feature) {
+        FEATURE_MOD_INTRO, FEATURE_BACKUP_MOODLE2 => true,
+        FEATURE_COMPLETION_TRACKS_VIEWS, FEATURE_GRADE_HAS_GRADE, FEATURE_COMPLETION_HAS_RULES, FEATURE_NO_VIEW_LINK => false,
+        default => null,
+    };
 }
 
 /**
@@ -58,6 +47,7 @@ function loop_supports(string $feature): ?bool {
  * @param object $data The form data
  * @param ?object $mform The form object, null when called from tests or CLI
  * @return int The ID of the new instance
+ * @throws dml_exception
  */
 function loop_add_instance(object $data, ?object $mform): int {
     global $DB;
@@ -84,6 +74,7 @@ function loop_add_instance(object $data, ?object $mform): int {
  *
  * @param object $data
  * @return bool
+ * @throws dml_exception
  */
 function loop_update_instance(object $data): bool {
     global $DB;
@@ -102,6 +93,7 @@ function loop_update_instance(object $data): bool {
  *
  * @param int $id
  * @return bool
+ * @throws dml_exception
  */
 function loop_delete_instance(int $id): bool {
     global $DB;
@@ -125,6 +117,8 @@ function loop_delete_instance(int $id): bool {
  *
  * @param object $coursemodule
  * @return cached_cm_info|null
+ * @throws dml_exception
+ * @throws \core\exception\moodle_exception
  */
 function loop_get_coursemodule_info(object $coursemodule): ?cached_cm_info {
     global $DB;

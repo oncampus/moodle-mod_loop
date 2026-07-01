@@ -37,7 +37,7 @@ final class event_test extends advanced_testcase {
     /**
      * The URL of the test loop system.
      */
-    private const LOOP_URL = 'https://loop.oncampus.de';
+    private const string LOOP_URL = 'https://loop.oncampus.de';
 
     /**
      * Sets up the test environment.

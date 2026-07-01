@@ -27,8 +27,9 @@ class restore_loop_activity_structure_step extends restore_activity_structure_st
      * Define the structure of the restore.
      *
      * @return restore_path_element
+     * @throws base_step_exception
      */
-    protected function define_structure() {
+    protected function define_structure(): restore_path_element {
 
         $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
@@ -43,8 +44,10 @@ class restore_loop_activity_structure_step extends restore_activity_structure_st
      * Process the loop.
      *
      * @param array $data
+     * @throws base_step_exception
+     * @throws dml_exception
      */
-    protected function process_loop($data) {
+    protected function process_loop($data): void {
         global $DB;
 
         $data = (object)$data;
@@ -57,11 +60,10 @@ class restore_loop_activity_structure_step extends restore_activity_structure_st
         $this->apply_activity_instance($newitemid);
     }
 
-
     /**
      * After execute.
      */
-    protected function after_execute() {
+    protected function after_execute(): void {
         // Add loop related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_loop', 'intro', null);
     }

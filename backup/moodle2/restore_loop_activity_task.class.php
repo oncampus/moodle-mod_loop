@@ -46,8 +46,9 @@ class restore_loop_activity_task extends restore_activity_task {
 
     /**
      * Define (add) particular steps this activity can have
+     * @throws base_task_exception
      */
-    protected function define_my_steps() {
+    protected function define_my_steps(): void {
         // Loop only has one structure step.
         $this->add_step(new restore_loop_activity_structure_step('loop_structure', 'loop.xml'));
     }
@@ -56,7 +57,7 @@ class restore_loop_activity_task extends restore_activity_task {
      * Define the contents in the activity that must be
      * processed by the link decoder.
      */
-    public static function define_decode_contents() {
+    public static function define_decode_contents(): array {
         $contents = [];
 
         $contents[] = new restore_decode_content('loop', ['intro'], 'loop');
@@ -68,7 +69,7 @@ class restore_loop_activity_task extends restore_activity_task {
      * Define the decoding rules for links belonging
      * to the activity to be executed by the link decoder.
      */
-    public static function define_decode_rules() {
+    public static function define_decode_rules(): array {
         $rules = [];
 
         $rules[] = new restore_decode_rule('LOOPVIEWBYID', '/mod/loop/view.php?id=$1', 'course_module');
@@ -83,7 +84,7 @@ class restore_loop_activity_task extends restore_activity_task {
      * loop logs. It must return one array
      * of {@link restore_log_rule} objects
      */
-    public static function define_restore_log_rules() {
+    public static function define_restore_log_rules(): array {
         $rules = [];
 
         $rules[] = new restore_log_rule('loop', 'add', 'view.php?id={course_module}', '{loop}');
@@ -105,7 +106,7 @@ class restore_loop_activity_task extends restore_activity_task {
      * by the restore final task, but are defined here at
      * activity level. All them are rules not linked to any module instance (cmid = 0)
      */
-    public static function define_restore_log_rules_for_course() {
+    public static function define_restore_log_rules_for_course(): array {
         $rules = [];
 
         // Fix old wrong uses (missing extension).
