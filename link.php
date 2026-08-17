@@ -64,21 +64,22 @@ $sidencryptedencoded = urlencode($sidencrypted);
 
 $moodleurl = str_replace('https://', '', $CFG->wwwroot);
 
-$url = $wikiroot . 'index.php/' . urldecode($page) .
-    '?auth=moodle' .
-    '&moodle=' . $moodleurl .
-    '&loop=' . $loop .
-    '&skin=' . $skin .
-    '&u=' . $username .
-    '&t=' . $token .
-    '&p=' . $page .
-    '&sid=' . $sidencryptedencoded;
-
 $output = <<<HTML
 <html>
-<head>
-    <meta http-equiv="refresh" content="0; URL={$url}">
-</head>
+<head></head>
+<body>
+<form id="wikiRedirect" method="POST" action="{$wikiroot}index.php/{$page}">
+    <input type="hidden" name="auth" value="moodle">
+    <input type="hidden" name="moodle" value="{$moodleurl}">
+    <input type="hidden" name="loop" value="{$loop}">
+    <input type="hidden" name="skin" value="{$skin}">
+    <input type="hidden" name="u" value="{$username}">
+    <input type="hidden" name="t" value="{$token}">
+    <input type="hidden" name="p" value="{$page}">
+    <input type="hidden" name="sid" value="{$sidencryptedencoded}">
+</form>
+<script>document.getElementById('wikiRedirect').submit();</script>
+</body>
 </html>
 HTML;
 
