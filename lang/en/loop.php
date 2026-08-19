@@ -23,6 +23,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['error_loops_server_connection'] = 'Could not connect to the LOOPs server: {$a}';
+$string['error_loops_server_response'] = 'The LOOPs server did not return a valid response ({$a}).';
 $string['event:loop_viewed'] = 'The user with id "{$a->userid}" viewed the LOOP activity with course module id "{$a->contextinstanceid}" (URL: {$a->link}).';
 
 $string['get_allowed_loops_task'] = 'Get allowed Loops';

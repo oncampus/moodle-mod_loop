@@ -92,8 +92,6 @@ class get_allowed_loops_task extends scheduled_task {
 
         $loops = json_decode($jsonresult, true);
 
-        curl_close($cha);
-
         $processedloops = [];
 
         foreach ($loops as $loop => $loopdata) {

@@ -23,6 +23,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use core\notification;
+
 /**
  * Get allowed loops.
  *
@@ -53,20 +55,31 @@ function get_allowed_loops_course(int|string $courseid): array {
     curl_setopt($cha, CURLOPT_URL, $url);
     curl_setopt($cha, CURLOPT_ENCODING, "UTF-8");
     curl_setopt($cha, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cha, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($cha, CURLOPT_TIMEOUT, 10);
     $jsonresult = curl_exec($cha);
+    $curlerror = curl_error($cha);
 
-    if (!$jsonresult) {
-        throw new Exception("Error getting data from server: " . curl_error($cha));
+    $loops = [];
+
+    if ($jsonresult !== false && empty($curlerror)) {
+        $decoded = json_decode($jsonresult, false);
+        if (is_array($decoded)) {
+            $loops = $decoded;
+        }
     }
 
-    $loops = json_decode($jsonresult);
-    curl_close($cha);
-
-    if ($loops instanceof stdClass) {
-        return array_values((array) $loops);
+    if (empty($loops)) {
+        if (!empty($curlerror)) {
+            $msg = get_string('error_loops_server_connection', 'mod_loop', $curlerror);
+        } else {
+            $httpcode = 'HTTP ' . curl_getinfo($cha, CURLINFO_HTTP_CODE);
+            $msg = get_string('error_loops_server_response', 'mod_loop', $httpcode);
+        }
+        notification::add($msg, \core\output\notification::NOTIFY_WARNING);
     }
 
-    return is_array($loops) ? $loops : [];
+    return $loops;
 }
 
 /**
@@ -114,8 +127,6 @@ function get_loop_structure(string $url): bool|string {
     if (curl_errno($ch)) {
         return false;
     }
-
-    curl_close($ch);
 
     $structureresult = json_decode($result, true);
     $structure = $structureresult['loopauth-structure']['structure'];

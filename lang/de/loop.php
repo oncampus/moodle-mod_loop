@@ -23,6 +23,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['error_loops_server_connection'] = 'Verbindung zum Server für die LOOPs konnte nicht hergestellt werden: {$a}';
+$string['error_loops_server_response'] = 'Der Server für die LOOPs hat keine gültige Antwort geliefert ({$a}).';
 $string['event:loop_viewed'] = 'Der Nutzende mit der ID "{$a->userid}" sah die Loop-Aktivität mit der Kursmodul ID "{$a->contextinstanceid}" ein. (URL: {$a->link}).';
 
 $string['get_allowed_loops_task'] = 'Synchronisieren der erlaubten LOOPs';
