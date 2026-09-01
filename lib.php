@@ -31,12 +31,13 @@ global $CFG;
  * Check if the feature is supported.
  *
  * @param string $feature
- * @return bool|null
+ * @return bool|string|null
  */
-function loop_supports(string $feature): ?bool {
+function loop_supports(string $feature): bool|string|null {
     return match ($feature) {
         FEATURE_MOD_INTRO, FEATURE_BACKUP_MOODLE2 => true,
         FEATURE_COMPLETION_TRACKS_VIEWS, FEATURE_GRADE_HAS_GRADE, FEATURE_COMPLETION_HAS_RULES, FEATURE_NO_VIEW_LINK => false,
+        FEATURE_MOD_PURPOSE => MOD_PURPOSE_CONTENT,
         default => null,
     };
 }
