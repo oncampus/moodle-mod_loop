@@ -63,7 +63,7 @@ function get_allowed_loops_course(int|string $courseid): array {
     $loops = [];
 
     if ($jsonresult !== false && empty($curlerror)) {
-        $decoded = json_decode($jsonresult, false);
+        $decoded = json_decode($jsonresult, true);
         if (is_array($decoded)) {
             $loops = $decoded;
         }
