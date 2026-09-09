@@ -54,11 +54,11 @@ class mod_loop_mod_form extends moodleform_mod {
         $loopsystems = get_allowed_loops($courseid);
         $firsturl = '';
         foreach ($loopsystems as $loopsystem) {
-            $loopsystemurl = $loopsystem->url;
+            $loopsystemurl = $loopsystem['url'];
             if ($firsturl == '') {
                 $firsturl = $loopsystemurl;
             }
-            $loops[$loopsystemurl] = $loopsystem->name . ' (' . $loopsystemurl . ')';
+            $loops[$loopsystemurl] = $loopsystem['name'] . ' (' . $loopsystemurl . ')';
         }
 
         $options = [
