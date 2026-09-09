@@ -33,6 +33,8 @@ $loop = required_param('loop', PARAM_HOST);
 $page = optional_param('page', '', PARAM_RAW);
 $skin = optional_param('skin', '', PARAM_TEXT);
 
+$page = str_replace([' ', '+'], '_', $page);
+
 $wikiroot = 'https://' . $loop . '/mediawiki/';
 
 $username = $USER->username;
