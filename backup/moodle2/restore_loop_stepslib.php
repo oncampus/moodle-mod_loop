@@ -29,7 +29,7 @@ class restore_loop_activity_structure_step extends restore_activity_structure_st
      * @return restore_path_element
      * @throws base_step_exception
      */
-    protected function define_structure(): restore_path_element {
+    protected function define_structure(): array {
 
         $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
